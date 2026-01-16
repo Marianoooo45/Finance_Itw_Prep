@@ -16,7 +16,6 @@ const PLAYLISTS = {
         { title: "Ça va aller", artist: "Pidi", src: "/music/PIDI - Ça va aller (Clip Officiel).mp3" },
     ],
     focus: [
-        // Placeholder relax music
         { title: "Lofi Study", artist: "Focus Chill", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
         { title: "Deep Work", artist: "Ambient Flow", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
         { title: "Rain Sounds", artist: "Nature", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" },
@@ -26,6 +25,7 @@ const PLAYLISTS = {
 type PlaylistType = keyof typeof PLAYLISTS;
 
 export default function AudioPlayer() {
+    const [mounted, setMounted] = useState(false);
     const [activePlaylist, setActivePlaylist] = useState<PlaylistType>('troll');
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
@@ -34,6 +34,10 @@ export default function AudioPlayer() {
     const [isMuted, setIsMuted] = useState(false);
 
     const audioRef = useRef<HTMLAudioElement | null>(null);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const playlist = PLAYLISTS[activePlaylist];
     const currentTrack = playlist[currentTrackIndex];
@@ -88,12 +92,12 @@ export default function AudioPlayer() {
     };
 
     useEffect(() => {
-        if (isPlaying && audioRef.current) {
+        if (mounted && isPlaying && audioRef.current) {
             setTimeout(() => {
                 audioRef.current?.play().catch(() => { });
             }, 100);
         }
-    }, [currentTrackIndex, activePlaylist]);
+    }, [currentTrackIndex, activePlaylist, mounted]);
 
     const formatTime = (t: number) => {
         if (isNaN(t)) return "00:00";
@@ -101,6 +105,8 @@ export default function AudioPlayer() {
         const s = Math.floor(t % 60);
         return `${m}:${s < 10 ? '0' : ''}${s}`;
     };
+
+    if (!mounted) return null;
 
     return (
         <div className="hidden md:flex fixed top-4 right-4 z-[100] flex-col items-end gap-2 font-sketch">
