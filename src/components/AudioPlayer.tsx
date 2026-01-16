@@ -6,19 +6,28 @@ import { Play, Pause, SkipForward, SkipBack, Volume2, VolumeX, Music, Zap, Coffe
 // 🎵 LISTE DES PISTES
 const PLAYLISTS = {
     troll: [
-        { title: "ARRÊTEZ", artist: "Mastu & Théodort", src: "/music/Mastu & Théodort - ARRÊTEZ ( remix ).mp3" },
-        { title: "TOP 1", artist: "Squeezie", src: "/music/SQUEEZIE - TOP 1.mp3" },
-        { title: "Dans ma folie", artist: "Pidi", src: "/music/PIDI - Dans ma folie (Clip Officiel).mp3" },
-        { title: "ATM", artist: "Kameto ft. Naskid", src: "/music/ATM - Kameto (ft. Naskid).mp3" },
-        { title: "GUERRIER", artist: "Doigby", src: "/music/Doigby - GUERRIER (clip officiel).mp3" },
-        { title: "MILI MILI", artist: "Inoxtag", src: "/music/INOXTAG - MILI MILI (clip officiel).mp3" },
-        { title: "Dans La Zone", artist: "Inoxtag", src: "/music/Inoxtag - Dans La Zone (Clip Officiel).mp3" },
-        { title: "Ça va aller", artist: "Pidi", src: "/music/PIDI - Ça va aller (Clip Officiel).mp3" },
+        { title: "ARRÊTEZ", artist: "Mastu & Théodort", src: "/music/troll/Mastu & Théodort - ARRÊTEZ ( remix ).mp3" },
+        { title: "TOP 1", artist: "Squeezie", src: "/music/troll/SQUEEZIE - TOP 1.mp3" },
+        { title: "ATM", artist: "Kameto ft. Naskid", src: "/music/troll/ATM - Kameto (ft. Naskid).mp3" },
+        { title: "GUERRIER", artist: "Doigby", src: "/music/troll/Doigby - GUERRIER (clip officiel).mp3" },
+        { title: "MILI MILI", artist: "Inoxtag", src: "/music/troll/INOXTAG - MILI MILI (clip officiel).mp3" },
+        { title: "Dans La Zone", artist: "Inoxtag", src: "/music/troll/Inoxtag - Dans La Zone (Clip Officiel).mp3" },
+        { title: "Ça va aller", artist: "Pidi", src: "/music/troll/PIDI - Ça va aller (Clip Officiel).mp3" },
+        { title: "Dans ma folie", artist: "Pidi", src: "/music/troll/PIDI - Dans ma folie (Clip Officiel).mp3" },
     ],
     focus: [
-        { title: "Lofi Study", artist: "Focus Chill", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
-        { title: "Deep Work", artist: "Ambient Flow", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
-        { title: "Rain Sounds", artist: "Nature", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" },
+        { title: "Aria Math (Slowed)", artist: "C418", src: "/music/chill/C418 - Aria Math (Slowed + Rain).mp3" },
+        { title: "Living Mice", artist: "C418", src: "/music/chill/C418 - Living Mice (Slowed + Rain) [_ygqeDTx3LE].mp3" },
+        { title: "Mice On Venus", artist: "C418", src: "/music/chill/C418 - Mice On Venus (Slowed + Rain) [B2KJEEa3Sns].mp3" },
+        { title: "Subwoofer Lullaby", artist: "C418", src: "/music/chill/C418 - Subwoofer Lullaby (Slowed + Rain).mp3" },
+        { title: "Sweden", artist: "C418", src: "/music/chill/C418 - Sweden (Slowed + Rain) [l-8Ecrlq5fw].mp3" },
+        { title: "Wet Hands", artist: "C418", src: "/music/chill/C418 - Wet Hands (Slowed + Rain) [R3p1lyyA6sY].mp3" },
+        { title: "Canalave City", artist: "Pokémon DP", src: "/music/chill/Canalave City (Day)： Remaster [0H3bkkOYWWo].mp3" },
+        { title: "Eterna City (Lofi)", artist: "Pokémon DP", src: "/music/chill/Pokémon Diamond and Pearl - Eterna City (Lofi Remix) [uRzH1iEfQAk].mp3" },
+        { title: "Laverre City", artist: "Pokémon XY", src: "/music/chill/Pokemon X & Y Anime Unreleased BGM Laverre City Music [GC4Khk49agE].mp3" },
+        { title: "Dawn's Appeal", artist: "Pokémon Anime", src: "/music/chill/Pokémon Anime Sound Collection - Dawn's Contest Appeal [3HjyYDvLWYk].mp3" },
+        { title: "Snowbelle City", artist: "Pokémon XY", src: "/music/chill/Pokémon X & Y - Snowbelle City Theme [Reorchestrated] [4nwhvedB4tc].mp3" },
+        { title: "Snowbelle Orchestral", artist: "Pokémon XY", src: "/music/chill/Winter in Kalos： Snowbelle City (Cinematic Orchestral Cover) [hFc7jt3UnKU].mp3" },
     ]
 };
 
@@ -215,7 +224,7 @@ export default function AudioPlayer() {
                     {activePlaylist === 'troll' ? (
                         <>
                             <Zap className="w-3 h-3" />
-                            <span>PLAYLIST TROLL</span>
+                            <span>PLAYLIST DE FOU</span>
                         </>
                     ) : (
                         <>
