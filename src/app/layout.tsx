@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   keywords: "finance interview, investment banking, financial modeling, interview prep, finance quiz",
 };
 
+import AudioPlayer from "@/components/AudioPlayer";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -18,7 +20,8 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body className="antialiased">
+      <body className="antialiased relative">
+        <AudioPlayer />
         {children}
       </body>
     </html>

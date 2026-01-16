@@ -19,7 +19,7 @@ export const REVISION_SHEETS: Sheet[] = [
         difficulty: 'Easy',
         progress: 0,
         variant: 'kraft',
-        imageUrl: '/images/Fiche 1 FIC cap floor.png'
+        imageUrl: '/images/rates-fixed-income/Fiche 1 FIC cap floor.png'
     },
     {
         id: 'fi-2',
@@ -29,7 +29,7 @@ export const REVISION_SHEETS: Sheet[] = [
         difficulty: 'Easy',
         progress: 0,
         variant: 'white',
-        imageUrl: '/images/Fiche 2 FIC swaption FRA.png'
+        imageUrl: '/images/rates-fixed-income/Fiche 2 FIC swaption FRA.png'
     },
     {
         id: 'fi-3',
@@ -39,7 +39,7 @@ export const REVISION_SHEETS: Sheet[] = [
         difficulty: 'Easy',
         progress: 0,
         variant: 'kraft',
-        imageUrl: '/images/Fiche 3 FIC indices et courbes.png'
+        imageUrl: '/images/rates-fixed-income/Fiche 3 FIC indices et courbes.png'
     },
     {
         id: 'fi-4',
@@ -49,7 +49,7 @@ export const REVISION_SHEETS: Sheet[] = [
         difficulty: 'Easy',
         progress: 0,
         variant: 'white',
-        imageUrl: '/images/Fiche 4 FIC bond math (sensis).png'
+        imageUrl: '/images/rates-fixed-income/Fiche 4 FIC bond math (sensis).png'
     },
     {
         id: 'fi-5',
@@ -59,7 +59,7 @@ export const REVISION_SHEETS: Sheet[] = [
         difficulty: 'Easy',
         progress: 0,
         variant: 'kraft',
-        imageUrl: '/images/Fiche 5 FIC spread & valo.png'
+        imageUrl: '/images/rates-fixed-income/Fiche 5 FIC spread & valo.png'
     },
     {
         id: 'fi-6',
@@ -69,7 +69,7 @@ export const REVISION_SHEETS: Sheet[] = [
         difficulty: 'Medium',
         progress: 0,
         variant: 'white',
-        imageUrl: '/images/Fiche 6 FIC infla.png'
+        imageUrl: '/images/rates-fixed-income/Fiche 6 FIC infla.png'
     },
     {
         id: 'fi-7',
@@ -79,7 +79,7 @@ export const REVISION_SHEETS: Sheet[] = [
         difficulty: 'Hard',
         progress: 0,
         variant: 'kraft',
-        imageUrl: '/images/Fiche 7 FIC greeks.png'
+        imageUrl: '/images/rates-fixed-income/Fiche 7 FIC greeks.png'
     },
     {
         id: 'fi-8',
@@ -89,7 +89,7 @@ export const REVISION_SHEETS: Sheet[] = [
         difficulty: 'Medium',
         progress: 0,
         variant: 'white',
-        imageUrl: '/images/Fiche 8 RFR vs IBOR .png'
+        imageUrl: '/images/rates-fixed-income/Fiche 8 RFR vs IBOR .png'
     },
     {
         id: 'fi-9',
@@ -99,7 +99,7 @@ export const REVISION_SHEETS: Sheet[] = [
         difficulty: 'Hard',
         progress: 0,
         variant: 'kraft',
-        imageUrl: '/images/Fiche 9 Swaptions.png'
+        imageUrl: '/images/rates-fixed-income/Fiche 9 Swaptions.png'
     },
     {
         id: 'fi-10',
@@ -109,7 +109,7 @@ export const REVISION_SHEETS: Sheet[] = [
         difficulty: 'Hard',
         progress: 0,
         variant: 'white',
-        imageUrl: '/images/Fiche 10 FIC Fiche Technique Cap & Floor.png'
+        imageUrl: '/images/rates-fixed-income/Fiche 10 FIC Fiche Technique Cap & Floor.png'
     },
     {
         id: 'fi-11',
@@ -119,12 +119,72 @@ export const REVISION_SHEETS: Sheet[] = [
         difficulty: 'Hard',
         progress: 0,
         variant: 'kraft',
-        imageUrl: '/images/Fiche 11 FIC Fiche Technique Le Taux de Swap (Par Swap Rate).png'
+        imageUrl: '/images/rates-fixed-income/Fiche 11 FIC Fiche Technique Le Taux de Swap (Par Swap Rate).png'
+    },
+
+    // --- EQUITY DERIVATIVES SHEETS ---
+    {
+        id: 'eq-1',
+        title: 'Call & Put Basics',
+        category: 'Equity Derivatives',
+        slug: 'equity-derivatives',
+        difficulty: 'Easy',
+        progress: 0,
+        variant: 'white',
+        imageUrl: '/images/equity-derivatives/Fiche 1 Equity Call & Put.png'
+    },
+    {
+        id: 'eq-2',
+        title: 'Call Spread & Butterfly',
+        category: 'Equity Derivatives',
+        slug: 'equity-derivatives',
+        difficulty: 'Medium',
+        progress: 0,
+        variant: 'kraft',
+        imageUrl: '/images/equity-derivatives/Fiche 2 Equity stratégies call spread et buttefly.png'
+    },
+    {
+        id: 'eq-3',
+        title: 'Put Down-and-In',
+        category: 'Equity Derivatives',
+        slug: 'equity-derivatives',
+        difficulty: 'Easy',
+        progress: 0,
+        variant: 'white',
+        imageUrl: '/images/equity-derivatives/Fiche 3 Equity Put down-and-in.png'
+    },
+    {
+        id: 'eq-4',
+        title: 'The Greeks (Equity)',
+        category: 'Equity Derivatives',
+        slug: 'equity-derivatives',
+        difficulty: 'Hard',
+        progress: 0,
+        variant: 'kraft',
+        imageUrl: '/images/equity-derivatives/Fiche 4 Equity Les Grecs sensibilités aux facteurs de risque.png'
+    },
+    {
+        id: 'eq-5',
+        title: 'Straddle vs Strangle',
+        category: 'Equity Derivatives',
+        slug: 'equity-derivatives',
+        difficulty: 'Medium',
+        progress: 0,
+        variant: 'white',
+        imageUrl: '/images/equity-derivatives/Fiche 5 Equity stratégies straddle vs strangle.png'
+    },
+    {
+        id: 'eq-6',
+        title: 'Risk Reversal & Skew',
+        category: 'Equity Derivatives',
+        slug: 'equity-derivatives',
+        difficulty: 'Hard',
+        progress: 0,
+        variant: 'kraft',
+        imageUrl: '/images/equity-derivatives/Fiche 6 Equity Risk reversal le skew.png'
     },
 
     // --- MOCK DATA (Other Categories) ---
-    { id: '1', title: 'Derivatives Basics', category: 'Equity Derivatives', slug: 'equity-derivatives', difficulty: 'Hard', progress: 30, variant: 'kraft' },
-    { id: '3', title: 'Equity Markets', category: 'Equity Derivatives', slug: 'equity-derivatives', difficulty: 'Easy', progress: 80, variant: 'kraft' },
     { id: '7', title: 'Macroeconomics 101', category: 'Macroeconomics', slug: 'macroeconomics', difficulty: 'Easy', progress: 90, variant: 'kraft' },
     { id: '8', title: 'CDS Mechanics', category: 'Credit Derivatives', slug: 'credit-derivatives', difficulty: 'Medium', progress: 0, variant: 'white' },
 ];
