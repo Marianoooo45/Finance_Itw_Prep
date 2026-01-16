@@ -1,65 +1,334 @@
-import Image from "next/image";
+'use client';
+
+import React, { useEffect, useRef, useMemo } from 'react';
+import Link from 'next/link';
+import rough from 'roughjs';
+import { Flame, Target } from 'lucide-react';
+import { RevisionCard, ProgressCard, DailyStreakCard } from '@/components';
+import LayoutDecorations from '@/components/LayoutDecorations';
+
+// --- Composants Utilitaires ---
+
+const RoughElement = ({
+  draw,
+  width,
+  height,
+  className = ""
+}: {
+  draw: (rc: any) => any[];
+  width: number;
+  height: number;
+  className?: string
+}) => {
+  const svgRef = useRef<SVGSVGElement>(null);
+
+  useEffect(() => {
+    if (svgRef.current) {
+      // Nettoyage
+      while (svgRef.current.firstChild) {
+        svgRef.current.removeChild(svgRef.current.firstChild);
+      }
+      const rc = rough.svg(svgRef.current);
+      const nodes = draw(rc);
+
+      // Gestion tableau ou élément unique
+      if (Array.isArray(nodes)) {
+        nodes.forEach(node => svgRef.current?.appendChild(node));
+      } else if (nodes) {
+        svgRef.current.appendChild(nodes);
+      }
+    }
+  }, [draw]);
+
+  return <svg ref={svgRef} width={width} height={height} viewBox={`0 0 ${width} ${height}`} className={className} />;
+};
+
+const QuizCard = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    // --- Début du code de dessin ---
+    const width = 400;
+    const height = 350;
+
+    // Gestion du Retina/DPR
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    canvas.style.width = `100%`;
+    canvas.style.height = `100%`;
+    ctx.scale(dpr, dpr);
+
+    const rc = rough.canvas(canvas);
+    const r = 30; // Rayon des coins
+
+    // 1. Fond blanc/beige avec coins arrondis (Path au lieu de rectangle)
+    const cardPath = `
+      M ${5 + r} 5 
+      L ${width - 5 - r} 5 
+      Q ${width - 5} 5 ${width - 5} ${5 + r} 
+      L ${width - 5} ${height - 5 - r} 
+      Q ${width - 5} ${height - 5} ${width - 5 - r} ${height - 5} 
+      L ${5 + r} ${height - 5} 
+      Q 5 ${height - 5} 5 ${height - 5 - r} 
+      L 5 ${5 + r} 
+      Q 5 5 ${5 + r} 5 
+      Z
+    `;
+
+    rc.path(cardPath, {
+      fill: "#fffbf0",
+      fillStyle: "solid",
+      roughness: 1.2,
+      stroke: "#333",
+      strokeWidth: 2,
+      bowing: 1.5,
+    });
+
+    // 2. Lignes de cahier
+    const lineHeight = 35;
+    const startY = 80;
+    for (let y = startY; y < height - 20; y += lineHeight) {
+      rc.line(15, y, width - 15, y, {
+        stroke: "#d1d1d1",
+        strokeWidth: 1,
+        roughness: 0.5,
+        bowing: 1,
+      });
+    }
+
+    // 3. Soulignement du titre (sketchy lines)
+    rc.line(100, 95, 300, 95, { stroke: "#333", roughness: 2, strokeWidth: 1.5 });
+    rc.line(110, 102, 290, 100, { stroke: "#333", roughness: 2, strokeWidth: 1.5 });
+
+    // 4. Cercle START (Fini les hachures)
+    const centerX = width / 2;
+    const centerY = height / 2 + 30;
+    const radius = 55;
+    rc.circle(centerX, centerY, radius * 2, {
+      fill: "#e2cfa5",
+      fillStyle: "solid",
+      stroke: "#333",
+      strokeWidth: 3,
+      roughness: 1.5,
+      bowing: 1.2
+    });
+
+    // 5. Graphique (bas droite)
+    const chartX = 280;
+    const chartY = 220;
+    // Axes
+    rc.path(`M${chartX} ${chartY} L${chartX} ${chartY + 50} L${chartX + 60} ${chartY + 50}`, { strokeWidth: 2, stroke: "#333" });
+
+    // Barres zigzag
+    rc.rectangle(chartX + 10, chartY + 35, 10, 15, { fill: "#333", fillStyle: "zigzag", stroke: "none" });
+    rc.rectangle(chartX + 25, chartY + 20, 10, 30, { fill: "#333", fillStyle: "zigzag", stroke: "none" });
+    rc.rectangle(chartX + 40, chartY + 10, 10, 40, { fill: "#333", fillStyle: "zigzag", stroke: "none" });
+
+    // Flèche du graphique
+    rc.path(`M${chartX + 5} ${chartY + 45} L${chartX + 55} ${chartY + 15}`, { strokeWidth: 2, stroke: "#333" });
+    rc.path(`M${chartX + 50} ${chartY + 20} L${chartX + 55} ${chartY + 15} L${chartX + 60} ${chartY + 20}`, { strokeWidth: 2, stroke: "#333" });
+
+    // 6. Points d'interrogation avec hachures
+    const qStyle = {
+      roughness: 2.8,
+      bowing: 1.5,
+      stroke: '#000000',
+      strokeWidth: 2,
+      fill: '#000000',
+      fillStyle: 'hachure' as const,
+      fillWeight: 1,
+      hachureAngle: 65,
+      hachureGap: 5,
+    };
+
+    const qMarkBody = `
+      M 130 200 
+      C 130 110, 170 70, 250 70 
+      C 320 70, 350 110, 350 170 
+      C 350 230, 290 250, 270 280 
+      L 270 340 
+      L 220 340 
+      L 220 280 
+      C 240 250, 290 230, 290 180 
+      C 290 150, 270 120, 240 120 
+      C 210 120, 190 150, 190 200 
+      Z
+    `;
+    const qMarkDot = `M 220 380 L 270 380 L 270 430 L 220 430 Z`;
+
+    // GRAND point d'interrogation (bas gauche)
+    ctx.save();
+    ctx.translate(20, 175);
+    ctx.scale(0.22, 0.22);
+    rc.path(qMarkBody, qStyle);
+    rc.path(qMarkDot, qStyle);
+    ctx.restore();
+
+    // PETIT point d'interrogation 1 (haut droite)
+    ctx.save();
+    ctx.translate(305, 95);
+    ctx.rotate(0.12);
+    ctx.scale(0.13, 0.13);
+    rc.path(qMarkBody, { ...qStyle, strokeWidth: 1.5, hachureGap: 4 });
+    rc.path(qMarkDot, { ...qStyle, strokeWidth: 1.5, hachureGap: 4 });
+    ctx.restore();
+
+    // PETIT point d'interrogation 2 (plus petit, à droite)
+    ctx.save();
+    ctx.translate(355, 85);
+    ctx.rotate(-0.08);
+    ctx.scale(0.09, 0.09);
+    rc.path(qMarkBody, { ...qStyle, strokeWidth: 1.2, hachureGap: 3 });
+    rc.path(qMarkDot, { ...qStyle, strokeWidth: 1.2, hachureGap: 3 });
+    ctx.restore();
+
+
+  }, []);
+
+  return (
+    <div className="sketch-card-wrapper transition-all duration-300 hover:translate-y-[-4px]">
+      <canvas ref={canvasRef} className="sketch-canvas" />
+      <div className="card-content-overlay">
+        <h1 className="quiz-title-sketch">QUIZ MODE</h1>
+        <div className="start-btn-sketch-text">START</div>
+      </div>
+    </div>
+  );
+};
+
+const SketchyArrow = ({ className = "" }: { className?: string }) => (
+  <svg viewBox="0 0 80 40" className={className} fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+    <path d="M5 25 Q20 28 35 22 Q50 16 60 20 Q70 24 75 18" />
+    <path d="M68 12 L75 18 L69 25" />
+  </svg>
+);
+
+const WobblyDecoration = ({ className = "" }: { className?: string }) => (
+  <svg viewBox="0 0 120 12" className={className} fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+    <path d="M2 6 Q15 2 30 6 Q45 10 60 6 Q75 2 90 6 Q105 10 118 6" />
+  </svg>
+);
+
+const CurvedArrowDown = ({ className = "" }: { className?: string }) => (
+  <svg viewBox="0 0 40 50" className={className} fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+    <path d="M10 8 Q5 25 15 35 Q25 45 35 40" />
+    <path d="M28 45 L35 40 L38 48" />
+  </svg>
+);
+
+// --- Composant Principal ---
 
 export default function Home() {
+
+  // Dessin pour la carte Revision Sheets (SVG based)
+  const drawMiniGraph = useMemo(() => (rc: any) => {
+    return [
+      rc.rectangle(12, 38, 10, 7, { fill: '#1a1a1a', fillStyle: 'hachure', hachureAngle: 60, hachureGap: 2.5 }),
+      rc.rectangle(25, 28, 10, 17, { fill: '#1a1a1a', fillStyle: 'hachure', hachureAngle: 60, hachureGap: 2.5 }),
+      rc.rectangle(38, 18, 10, 27, { fill: '#1a1a1a', fillStyle: 'hachure', hachureAngle: 60, hachureGap: 2.5 }),
+      rc.rectangle(51, 13, 10, 32, { fill: '#1a1a1a', fillStyle: 'hachure', hachureAngle: 60, hachureGap: 2.5 }),
+      rc.line(5, 45, 5, 5, { stroke: '#1a1a1a', strokeWidth: 2 }),
+      rc.line(5, 45, 65, 45, { stroke: '#1a1a1a', strokeWidth: 2 }),
+      rc.path("M15 35 Q35 30 55 15", { stroke: '#1a1a1a', strokeWidth: 2 }),
+      rc.line(50, 18, 55, 15, { stroke: '#1a1a1a', strokeWidth: 2 }),
+      rc.line(55, 15, 58, 22, { stroke: '#1a1a1a', strokeWidth: 2 })
+    ];
+  }, []);
+
+  const drawRevisionBook = useMemo(() => (rc: any) => {
+    return [
+      rc.path("M10 10 Q25 8 40 12 L40 45 Q25 42 10 44 Z", { stroke: '#3a3530', strokeWidth: 2.5, roughness: 1.5 }),
+      rc.path("M40 12 Q55 8 70 10 L70 44 Q55 42 40 45 Z", { stroke: '#3a3530', strokeWidth: 2.5, roughness: 1.5 }),
+      rc.line(40, 12, 40, 45, { stroke: '#3a3530', strokeWidth: 2.5 })
+    ];
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <main className="min-h-screen p-6 md:p-10 lg:p-12 relative overflow-hidden"
+      style={{
+        background: `
+          url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E"),
+          radial-gradient(ellipse at center top, #2d2b2b 0%, #1f1d1d 40%, #161515 100%)
+        `,
+        backgroundColor: '#1a1918',
+      }}
+    >
+      {/* Effet poussière de craie */}
+      <div className="fixed inset-0 pointer-events-none"
+        style={{
+          background: `
+            radial-gradient(ellipse at 20% 10%, rgba(255,255,255,0.015) 0%, transparent 40%),
+            radial-gradient(ellipse at 80% 90%, rgba(255,255,255,0.01) 0%, transparent 40%)
+          `,
+        }}
+      />
+
+      <div className="max-w-5xl mx-auto relative z-10">
+
+        {/* HEADER */}
+        <header className="text-center mb-10 md:mb-14">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl tracking-wide mb-4 whitespace-nowrap"
+            style={{
+              fontFamily: "'Cabin Sketch', sans-serif",
+              fontWeight: 700,
+              color: '#e2d1a6',
+              textShadow: `
+                1px 1px 0px #1a1a1a,
+                2px 2px 0px rgba(0,0,0,0.5),
+                0px 0px 8px rgba(226, 209, 166, 0.2)
+              `,
+            }}
+          >
+            FINANCE INTERVIEW PREP
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+          <div className="flex justify-center">
+            <WobblyDecoration className="w-64 md:w-96 text-[#e2d1a6] opacity-80" />
+          </div>
+          <div className="flex justify-center mt-[-4px]">
+            <WobblyDecoration className="w-56 md:w-[28rem] text-[#e2d1a6] opacity-50" />
+          </div>
+        </header>
+
+        {/* CONTAINER GRILLE AVEC DÉCORATIONS */}
+        <div className="relative w-full max-w-5xl mx-auto">
+          <LayoutDecorations />
+
+          {/* GRILLE PRINCIPALE - Ligne 1 */}
+          <div className="flex flex-col md:flex-row gap-4 md:gap-6 mb-8 items-start justify-center">
+            {/* Carte 1: Revision Sheets (Plus large - 60%) */}
+            <div className="w-full md:w-[60%]">
+              <Link href="/revision-sheets" className="block w-full h-full">
+                <RevisionCard />
+              </Link>
+            </div>
+
+            {/* Carte 2: QUIZ MODE (Plus carré - 40%) */}
+            <div className="w-full md:w-[40%]">
+              <QuizCard />
+            </div>
+          </div>
+
+          {/* SECTION STATS - Ligne 2 (Alignement sous les cartes du haut) */}
+          <div className="flex flex-col md:flex-row gap-4 md:gap-6">
+            {/* Daily Streak */}
+            <div className="w-full md:w-[60%]">
+              <DailyStreakCard streak={5} />
+            </div>
+
+            {/* Progress */}
+            <div className="w-full md:w-[40%]">
+              <ProgressCard progress={0.65} />
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }

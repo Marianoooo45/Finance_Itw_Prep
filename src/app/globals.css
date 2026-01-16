@@ -1,26 +1,333 @@
+@import url("https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Patrick+Hand&family=Gochi+Hand&family=Gloria+Hallelujah&family=Cabin+Sketch:wght@400;700&family=Special+Elite&display=swap");
+
+/* ... (the rest of the file will be updated via this replacement) ... */
+@font-face {
+  font-family: 'Excalifont';
+  src: url('/fonts/Excalifont-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #1e1e1e;
+  --foreground: #f5f5f5;
+  --card-yellow: #e2cfa5;
+  /* Plus jaune, moins beige */
+  --card-white: #f8f6f0;
+  --accent-gold: #e2d1a6;
+  /* Plus beige/sable, moins jaune */
+  --chalk-color: #d8c89d;
+  --sketchy-dark: #2a2a2a;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sketchy: 'Architects Daughter', cursive;
+  --font-hand: 'Patrick Hand', cursive;
+  --font-chalk: 'Cabin Sketch', cursive;
+  --font-marker: 'Cabin Sketch', cursive;
+  --font-elite: 'Special Elite', system-ui;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.cabin-sketch-regular {
+  font-family: "Cabin Sketch", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.cabin-sketch-bold {
+  font-family: "Cabin Sketch", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.special-elite-regular {
+  font-family: "Special Elite", system-ui;
+  font-weight: 400;
+  font-style: normal;
 }
 
 body {
-  background: var(--background);
+  background: #1a1a1a;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Patrick Hand', cursive;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Chalkboard Background Effect */
+.chalkboard-bg {
+  background:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at center, #2a2828 0%, #1a1818 50%, #141414 100%);
+  background-color: #1c1c1c;
+}
+
+/* Gold chalk text color */
+.chalk-gold {
+  color: var(--accent-gold);
+  text-shadow:
+    1px 1px 1px rgba(0, 0, 0, 0.2),
+    0 0 1px rgba(226, 209, 166, 0.3);
+}
+
+@keyframes subtle-wobble {
+
+  0%,
+  100% {
+    transform: rotate(-0.5deg);
+  }
+
+  50% {
+    transform: rotate(0.5deg);
+  }
+}
+
+.lined-paper {
+  background-image:
+    repeating-linear-gradient(transparent,
+      transparent 27px,
+      #e0e0e0 28px);
+  background-size: 100% 28px;
+  background-position: 0 8px;
+}
+
+.sketchy-border {
+  box-shadow:
+    2px 2px 0 #333,
+    4px 4px 0 rgba(0, 0, 0, 0.1),
+    inset 1px 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.wobbly-card {
+  border-radius: 3px 8px 5px 10px;
+}
+
+.sketchy-circle {
+  border-radius: 50%;
+  position: relative;
+}
+
+.sketchy-circle::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border: 3px solid #5a4a3a;
+  border-radius: 50%;
+  opacity: 0.3;
+  transform: rotate(2deg);
+}
+
+.sketchy-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px) rotate(0deg);
+  box-shadow:
+    4px 6px 0 #333,
+    6px 8px 0 rgba(0, 0, 0, 0.15);
+}
+
+/* --- Quiz Mode Sketch Card Styles --- */
+.sketch-card-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  /* Un peu plus carré/compact */
+  height: 340px;
+  margin: 0 auto;
+  font-family: "Patrick Hand", cursive;
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+/* --- Revision Card Styles --- */
+.revision-card-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  /* Plus large */
+  height: 340px;
+  /* Pareil que quiz card pour l'alignement */
+  margin: -20px auto 0;
+  /* Remontée pour alignement */
+  font-family: "Patrick Hand", cursive;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Progress & Streak Card Styles --- */
+.progress-card-wrapper,
+.streak-card-wrapper {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  /* Un peu plus haut */
+  font-family: "Patrick Hand", cursive;
+}
+
+.revision-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.revision-content-overlay {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  pointer-events: none;
+}
+
+.revision-title {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #222;
+  margin-top: 20px;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.5);
+  font-family: "Patrick Hand", cursive;
+}
+
+.sketch-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.card-content-overlay {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.quiz-title-sketch {
+  font-family: "Patrick Hand", cursive;
+  font-size: 3rem;
+  margin-top: 30px;
+  margin-bottom: 0;
+  color: #222;
+  letter-spacing: 1px;
+  transform: rotate(-1deg);
+  font-weight: normal;
+}
+
+.start-btn-sketch-text {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  color: #222;
+  cursor: pointer;
+  user-select: none;
+  font-weight: bold;
+  font-family: "Patrick Hand", cursive;
+}
+
+/* --- Progress Card Styles --- */
+.progress-card-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  font-family: "Patrick Hand", cursive;
+}
+
+.progress-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+}
+
+.progress-content-overlay {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  text-align: center;
+}
+
+/* --- Daily Streak Card Styles --- */
+.streak-card-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  font-family: "Patrick Hand", cursive;
+}
+
+.streak-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+}
+
+.streak-content-overlay {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+}
+
+.streak-content-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 10px;
+}
+
+.streak-label-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.streak-icon {
+  width: 24px;
+  height: 24px;
+  color: #ff5722;
+  /* Orange flamme */
+}
+
+.streak-label {
+  font-size: 1.6rem;
+  color: #222;
+  font-weight: normal;
+  letter-spacing: 1px;
+}
+
+.streak-value {
+  font-size: 1.8rem;
+  color: #222;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
