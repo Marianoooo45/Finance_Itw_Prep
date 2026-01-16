@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Play, Pause, SkipForward, SkipBack, Volume2, VolumeX, Music, Zap, Coffee } from 'lucide-react';
+import { Play, Pause, SkipForward, SkipBack, Volume2, VolumeX } from 'lucide-react';
 
 // 🎵 LISTE DES PISTES
 const PLAYLISTS = {
@@ -207,32 +207,31 @@ export default function AudioPlayer() {
 
                 </div>
 
-                {/* Playlist Switcher Tag (Dangling Button) */}
-                <button
-                    onClick={togglePlaylist}
+                {/* Playlist Switcher - Switch Style */}
+                <div
                     className="
-            mt-[-10px] mr-10 z-10 
-            bg-[#1a1918] text-[#e2d1a6] 
-            px-4 py-1.5 pt-3
-            text-[10px] font-bold uppercase tracking-widest
-            border-x-2 border-b-2 border-[#e2d1a6] rounded-b-xl
-            hover:bg-[#e2d1a6] hover:text-[#1a1918] transition-all
-            flex items-center gap-2 shadow-lg hover:pt-4
+            mt-[-12px] mr-8 z-10 
+            bg-[#e2d1a6] text-[#1a1918] 
+            px-3 py-2 pt-4
+            border-x-2 border-b-2 border-[#1a1918] rounded-b-xl
+            flex items-center gap-2 shadow-lg
         "
                     style={{ transform: 'rotate(1deg)' }}
                 >
-                    {activePlaylist === 'troll' ? (
-                        <>
-                            <Zap className="w-3 h-3" />
-                            <span>PLAYLIST DE FOU</span>
-                        </>
-                    ) : (
-                        <>
-                            <Coffee className="w-3 h-3" />
-                            <span>PLAYLIST CHILL</span>
-                        </>
-                    )}
-                </button>
+                    <span className={`text-[9px] font-bold tracking-wider transition-opacity ${activePlaylist === 'focus' ? 'opacity-100' : 'opacity-40'}`}>CHILL</span>
+
+                    <button
+                        onClick={togglePlaylist}
+                        className="w-10 h-5 bg-[#1a1918] rounded-full relative flex items-center px-0.5 cursor-pointer hover:opacity-90 transition-opacity"
+                        title="Switch Playlist"
+                    >
+                        <div
+                            className={`w-4 h-4 bg-[#e2d1a6] rounded-full shadow-sm transform transition-transform duration-300 ${activePlaylist === 'troll' ? 'translate-x-5' : 'translate-x-0'}`}
+                        />
+                    </button>
+
+                    <span className={`text-[9px] font-bold tracking-wider transition-opacity ${activePlaylist === 'troll' ? 'opacity-100' : 'opacity-40'}`}>CHAD</span>
+                </div>
 
             </div>
         </div>
