@@ -103,8 +103,8 @@ export default function AudioPlayer() {
     };
 
     return (
-        <div className="fixed bottom-4 left-0 w-full flex justify-center md:w-auto md:left-auto md:bottom-auto md:top-4 md:right-4 z-[100] font-sketch">
-            <div className="flex flex-col items-center md:items-end gap-0">
+        <div className="hidden md:flex fixed top-4 right-4 z-[100] flex-col items-end gap-2 font-sketch">
+            <div className="flex flex-col items-end gap-0">
                 <audio
                     ref={audioRef}
                     src={currentTrack.src}
@@ -209,12 +209,12 @@ export default function AudioPlayer() {
                     {activePlaylist === 'troll' ? (
                         <>
                             <Zap className="w-3 h-3" />
-                            <span> PLAYLIST TROLL</span>
+                            <span>PLAYLIST TROLL</span>
                         </>
                     ) : (
                         <>
                             <Coffee className="w-3 h-3" />
-                            <span> PLAYLIST CHILL</span>
+                            <span>PLAYLIST CHILL</span>
                         </>
                     )}
                 </button>
