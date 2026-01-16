@@ -35,7 +35,7 @@ type PlaylistType = keyof typeof PLAYLISTS;
 
 export default function AudioPlayer() {
     const [mounted, setMounted] = useState(false);
-    const [activePlaylist, setActivePlaylist] = useState<PlaylistType>('troll');
+    const [activePlaylist, setActivePlaylist] = useState<PlaylistType>('focus');
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
     const [progress, setProgress] = useState(0);
