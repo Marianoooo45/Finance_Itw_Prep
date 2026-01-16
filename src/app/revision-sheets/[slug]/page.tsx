@@ -7,6 +7,10 @@ import { ArrowLeft, X, ZoomIn, ChevronLeft, ChevronRight } from 'lucide-react';
 import { REVISION_SHEETS } from '@/data/sheets';
 import { markSheetAsViewed } from '@/lib/user-stats';
 
+// Global Audio (Persist across navigation)
+let globalBackAudio: HTMLAudioElement | null = null;
+let globalOpenSheetAudio: HTMLAudioElement | null = null;
+
 export default function CategoryPage() {
     const params = useParams();
     const slug = params?.slug as string;
@@ -14,6 +18,38 @@ export default function CategoryPage() {
 
     // Filtrer les fiches par slug
     const categorySheets = REVISION_SHEETS.filter(sheet => sheet.slug === slug);
+
+    // Audio Init
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            // Back Sound
+            if (!globalBackAudio) {
+                globalBackAudio = new Audio('/music/sound effects/retour arriere.wav');
+                globalBackAudio.volume = 0.5;
+                globalBackAudio.load();
+            }
+            // Open Sheet Sound
+            if (!globalOpenSheetAudio) {
+                globalOpenSheetAudio = new Audio('/music/sound effects/ouvrir fiche.wav');
+                globalOpenSheetAudio.volume = 0.5;
+                globalOpenSheetAudio.load();
+            }
+        }
+    }, []);
+
+    const playBack = () => {
+        if (globalBackAudio) {
+            globalBackAudio.currentTime = 0;
+            globalBackAudio.play().catch(() => { });
+        }
+    };
+
+    const playOpenSheet = () => {
+        if (globalOpenSheetAudio) {
+            globalOpenSheetAudio.currentTime = 0;
+            globalOpenSheetAudio.play().catch(() => { });
+        }
+    };
 
     // Track viewed sheet when modal is open or changed
     useEffect(() => {
@@ -55,7 +91,7 @@ export default function CategoryPage() {
             <div className="min-h-screen bg-[#1a1918] text-[#e2d1a6] p-10 flex flex-col items-center justify-center font-sketch">
                 <h1 className="text-4xl mb-4">Classified Information</h1>
                 <p>No sheets found for this category yet.</p>
-                <Link href="/revision-sheets" className="mt-8 underline hover:text-white">Back to Library</Link>
+                <Link href="/revision-sheets" className="mt-8 underline hover:text-white" onMouseDown={playBack}>Back to Library</Link>
             </div>
         );
     }
@@ -70,11 +106,14 @@ export default function CategoryPage() {
             {/* HEADER */}
             <div className="max-w-7xl mx-auto w-full mb-12 flex flex-col items-start gap-6">
                 <Link href="/revision-sheets">
-                    <button className="
-            px-4 py-2 font-sketch text-lg border-2 border-[#e2d1a6] bg-transparent text-[#e2d1a6]
-            hover:bg-[#e2d1a6] hover:text-black transition-colors rounded-sm
-            flex items-center gap-2
-          ">
+                    <button
+                        onMouseDown={playBack}
+                        className="
+                            px-4 py-2 font-sketch text-lg border-2 border-[#e2d1a6] bg-transparent text-[#e2d1a6]
+                            hover:bg-[#e2d1a6] hover:text-black transition-colors rounded-sm
+                            flex items-center gap-2
+                        "
+                    >
                         <ArrowLeft className="w-5 h-5" />
                         BACK TO LIBRARY
                     </button>
@@ -104,6 +143,7 @@ export default function CategoryPage() {
                         <div
                             className="relative group w-full aspect-[4/3] bg-[#f8f6f0] p-2 rotate-1 hover:rotate-0 transition-transform duration-300 shadow-2xl rounded-sm cursor-pointer"
                             onClick={() => sheet.imageUrl && setSelectedIndex(index)}
+                            onMouseDown={playOpenSheet}
                         >
                             {/* Coin "Scotch" */}
                             <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-32 h-8 bg-white/20 backdrop-blur-sm rotate-[-2deg] z-10 border-l border-r border-white/10 pointer-events-none" />
@@ -132,6 +172,7 @@ export default function CategoryPage() {
 
                             <button
                                 onClick={() => sheet.imageUrl && setSelectedIndex(index)}
+                                onMouseDown={playOpenSheet}
                                 className="
                     px-5 py-1 font-sketch text-lg border-2 border-black bg-[#e2d1a6] text-black 
                     hover:bg-white hover:scale-105 transition-all cursor-pointer

@@ -1,11 +1,44 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, FolderOpen } from 'lucide-react';
 import { CATEGORIES } from '@/data/sheets';
 
+// Global Audio (Persist across navigation)
+let globalFolderAudio: HTMLAudioElement | null = null;
+let globalBackAudio: HTMLAudioElement | null = null;
+
 export default function RevisionSheetsPage() {
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            if (!globalFolderAudio) {
+                globalFolderAudio = new Audio('/music/sound effects/folder.m4a');
+                globalFolderAudio.volume = 0.5;
+                globalFolderAudio.load();
+            }
+            if (!globalBackAudio) {
+                globalBackAudio = new Audio('/music/sound effects/retour arriere.wav');
+                globalBackAudio.volume = 0.5;
+                globalBackAudio.load();
+            }
+        }
+    }, []);
+
+    const playFolder = () => {
+        if (globalFolderAudio) {
+            globalFolderAudio.currentTime = 0;
+            globalFolderAudio.play().catch(() => { });
+        }
+    };
+
+    const playBack = () => {
+        if (globalBackAudio) {
+            globalBackAudio.currentTime = 0;
+            globalBackAudio.play().catch(() => { });
+        }
+    };
 
     return (
         <main className="min-h-screen p-6 md:p-10 relative flex flex-col font-sans text-[#1a1918]"
@@ -21,7 +54,11 @@ export default function RevisionSheetsPage() {
 
                 {/* Navigation Back */}
                 <div className="self-start mb-4">
-                    <Link href="/" className="flex items-center gap-2 text-[#e2d1a6] hover:text-white transition-colors">
+                    <Link
+                        href="/"
+                        className="flex items-center gap-2 text-[#e2d1a6] hover:text-white transition-colors"
+                        onMouseDown={playBack}
+                    >
                         <ArrowLeft className="w-5 h-5" />
                         <span className="font-sketch text-lg">BACK TO DESK</span>
                     </Link>
@@ -41,7 +78,7 @@ export default function RevisionSheetsPage() {
             {/* GRID OF CATEGORIES */}
             <div className="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 content-start">
                 {CATEGORIES.map((cat) => (
-                    <Link key={cat.id} href={`/revision-sheets/${cat.slug}`} className="block h-full">
+                    <Link key={cat.id} href={`/revision-sheets/${cat.slug}`} className="block h-full" onMouseDown={playFolder}>
                         <div
                             className="
                   relative p-6 flex flex-col h-64 shadow-xl transition-all duration-300 

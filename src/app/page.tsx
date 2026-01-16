@@ -25,14 +25,11 @@ const RoughElement = ({
 
   useEffect(() => {
     if (svgRef.current) {
-      // Nettoyage
       while (svgRef.current.firstChild) {
         svgRef.current.removeChild(svgRef.current.firstChild);
       }
       const rc = rough.svg(svgRef.current);
       const nodes = draw(rc);
-
-      // Gestion tableau ou élément unique
       if (Array.isArray(nodes)) {
         nodes.forEach(node => svgRef.current?.appendChild(node));
       } else if (nodes) {
@@ -50,15 +47,11 @@ const QuizCard = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // --- Début du code de dessin ---
     const width = 400;
     const height = 350;
-
-    // Gestion du Retina/DPR
     const dpr = window.devicePixelRatio || 1;
     canvas.width = width * dpr;
     canvas.height = height * dpr;
@@ -67,9 +60,8 @@ const QuizCard = () => {
     ctx.scale(dpr, dpr);
 
     const rc = rough.canvas(canvas);
-    const r = 30; // Rayon des coins
+    const r = 30;
 
-    // 1. Fond blanc/beige avec coins arrondis (Path au lieu de rectangle)
     const cardPath = `
       M ${5 + r} 5 
       L ${width - 5 - r} 5 
@@ -93,7 +85,6 @@ const QuizCard = () => {
       disableMultiStroke: true,
     });
 
-    // 2. Lignes de cahier
     const lineHeight = 35;
     const startY = 80;
     for (let y = startY; y < height - 20; y += lineHeight) {
@@ -105,11 +96,9 @@ const QuizCard = () => {
       });
     }
 
-    // 3. Soulignement du titre (sketchy lines)
     rc.line(100, 95, 300, 95, { stroke: "#333", roughness: 2, strokeWidth: 1.5 });
     rc.line(110, 102, 290, 100, { stroke: "#333", roughness: 2, strokeWidth: 1.5 });
 
-    // 4. Cercle START (Fini les hachures)
     const centerX = width / 2;
     const centerY = height / 2 + 30;
     const radius = 55;
@@ -122,22 +111,15 @@ const QuizCard = () => {
       bowing: 1.2
     });
 
-    // 5. Graphique (bas droite)
     const chartX = 280;
     const chartY = 220;
-    // Axes
     rc.path(`M${chartX} ${chartY} L${chartX} ${chartY + 50} L${chartX + 60} ${chartY + 50}`, { strokeWidth: 2, stroke: "#333" });
-
-    // Barres zigzag
     rc.rectangle(chartX + 10, chartY + 35, 10, 15, { fill: "#333", fillStyle: "zigzag", stroke: "none" });
     rc.rectangle(chartX + 25, chartY + 20, 10, 30, { fill: "#333", fillStyle: "zigzag", stroke: "none" });
     rc.rectangle(chartX + 40, chartY + 10, 10, 40, { fill: "#333", fillStyle: "zigzag", stroke: "none" });
-
-    // Flèche du graphique
     rc.path(`M${chartX + 5} ${chartY + 45} L${chartX + 55} ${chartY + 15}`, { strokeWidth: 2, stroke: "#333" });
     rc.path(`M${chartX + 50} ${chartY + 20} L${chartX + 55} ${chartY + 15} L${chartX + 60} ${chartY + 20}`, { strokeWidth: 2, stroke: "#333" });
 
-    // 6. Points d'interrogation avec hachures
     const qStyle = {
       roughness: 2.8,
       bowing: 1.5,
@@ -165,7 +147,6 @@ const QuizCard = () => {
     `;
     const qMarkDot = `M 220 380 L 270 380 L 270 430 L 220 430 Z`;
 
-    // GRAND point d'interrogation (bas gauche)
     ctx.save();
     ctx.translate(20, 175);
     ctx.scale(0.22, 0.22);
@@ -173,7 +154,6 @@ const QuizCard = () => {
     rc.path(qMarkDot, qStyle);
     ctx.restore();
 
-    // PETIT point d'interrogation 1 (haut droite)
     ctx.save();
     ctx.translate(305, 95);
     ctx.rotate(0.12);
@@ -182,7 +162,6 @@ const QuizCard = () => {
     rc.path(qMarkDot, { ...qStyle, strokeWidth: 1.5, hachureGap: 4 });
     ctx.restore();
 
-    // PETIT point d'interrogation 2 (plus petit, à droite)
     ctx.save();
     ctx.translate(355, 85);
     ctx.rotate(-0.08);
@@ -190,7 +169,6 @@ const QuizCard = () => {
     rc.path(qMarkBody, { ...qStyle, strokeWidth: 1.2, hachureGap: 3 });
     rc.path(qMarkDot, { ...qStyle, strokeWidth: 1.2, hachureGap: 3 });
     ctx.restore();
-
 
   }, []);
 
@@ -210,6 +188,10 @@ const WobblyDecoration = ({ className = "" }: { className?: string }) => (
     <path d="M2 6 Q15 2 30 6 Q45 10 60 6 Q75 2 90 6 Q105 10 118 6" />
   </svg>
 );
+
+// --- Audio Globals (Persist across navigation) ---
+let globalPencilAudio: HTMLAudioElement | null = null;
+let globalPaperAudio: HTMLAudioElement | null = null;
 
 // --- Composant Principal ---
 
@@ -232,8 +214,37 @@ export default function Home() {
     };
 
     window.addEventListener('progress-updated', handleProgressUpdate);
+
+    // 4. Preload Sounds (Lazy Init)
+    if (typeof window !== 'undefined') {
+      if (!globalPencilAudio) {
+        globalPencilAudio = new Audio('/music/sound effects/stylo.m4a');
+        globalPencilAudio.volume = 0.5;
+        globalPencilAudio.load();
+      }
+      if (!globalPaperAudio) {
+        globalPaperAudio = new Audio('/music/sound effects/papier froissement.m4a');
+        globalPaperAudio.volume = 0.5;
+        globalPaperAudio.load();
+      }
+    }
+
     return () => window.removeEventListener('progress-updated', handleProgressUpdate);
   }, []);
+
+  const playPencil = () => {
+    if (globalPencilAudio) {
+      globalPencilAudio.currentTime = 0; // Instant replay
+      globalPencilAudio.play().catch(() => { });
+    }
+  };
+
+  const playPaper = () => {
+    if (globalPaperAudio) {
+      globalPaperAudio.currentTime = 0; // Instant replay
+      globalPaperAudio.play().catch(() => { });
+    }
+  };
 
   return (
     <main className="min-h-screen p-6 md:p-10 lg:p-12 relative overflow-hidden"
@@ -289,13 +300,17 @@ export default function Home() {
           <div className="flex flex-col md:flex-row gap-4 md:gap-6 mb-8 items-start justify-center">
             {/* Carte 1: Revision Sheets (Plus large - 60%) */}
             <div className="w-full md:w-[60%]">
-              <Link href="/revision-sheets" className="block w-full h-full">
+              <Link
+                href="/revision-sheets"
+                className="block w-full h-full"
+                onMouseDown={playPencil}
+              >
                 <RevisionCard />
               </Link>
             </div>
 
             {/* Carte 2: QUIZ MODE (Plus carré - 40%) */}
-            <div className="w-full md:w-[40%]">
+            <div className="w-full md:w-[40%] cursor-pointer" onMouseDown={playPaper}>
               <QuizCard />
             </div>
           </div>
