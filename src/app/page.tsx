@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useRef, useMemo, useState } from 'react';
 import Link from 'next/link';
 import rough from 'roughjs';
-import { Flame, Target } from 'lucide-react';
 import { RevisionCard, ProgressCard, DailyStreakCard } from '@/components';
 import LayoutDecorations from '@/components/LayoutDecorations';
+import { checkAndUpdateStreak, getProgressPercentage } from '@/lib/user-stats';
+import { REVISION_SHEETS } from '@/data/sheets';
 
 // --- Composants Utilitaires ---
 
@@ -89,6 +90,7 @@ const QuizCard = () => {
       stroke: "#333",
       strokeWidth: 2,
       bowing: 1.5,
+      disableMultiStroke: true,
     });
 
     // 2. Lignes de cahier
@@ -203,51 +205,34 @@ const QuizCard = () => {
   );
 };
 
-const SketchyArrow = ({ className = "" }: { className?: string }) => (
-  <svg viewBox="0 0 80 40" className={className} fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-    <path d="M5 25 Q20 28 35 22 Q50 16 60 20 Q70 24 75 18" />
-    <path d="M68 12 L75 18 L69 25" />
-  </svg>
-);
-
 const WobblyDecoration = ({ className = "" }: { className?: string }) => (
   <svg viewBox="0 0 120 12" className={className} fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
     <path d="M2 6 Q15 2 30 6 Q45 10 60 6 Q75 2 90 6 Q105 10 118 6" />
   </svg>
 );
 
-const CurvedArrowDown = ({ className = "" }: { className?: string }) => (
-  <svg viewBox="0 0 40 50" className={className} fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-    <path d="M10 8 Q5 25 15 35 Q25 45 35 40" />
-    <path d="M28 45 L35 40 L38 48" />
-  </svg>
-);
-
 // --- Composant Principal ---
 
 export default function Home() {
+  const [streak, setStreak] = useState(0);
+  const [progress, setProgress] = useState(0);
 
-  // Dessin pour la carte Revision Sheets (SVG based)
-  const drawMiniGraph = useMemo(() => (rc: any) => {
-    return [
-      rc.rectangle(12, 38, 10, 7, { fill: '#1a1a1a', fillStyle: 'hachure', hachureAngle: 60, hachureGap: 2.5 }),
-      rc.rectangle(25, 28, 10, 17, { fill: '#1a1a1a', fillStyle: 'hachure', hachureAngle: 60, hachureGap: 2.5 }),
-      rc.rectangle(38, 18, 10, 27, { fill: '#1a1a1a', fillStyle: 'hachure', hachureAngle: 60, hachureGap: 2.5 }),
-      rc.rectangle(51, 13, 10, 32, { fill: '#1a1a1a', fillStyle: 'hachure', hachureAngle: 60, hachureGap: 2.5 }),
-      rc.line(5, 45, 5, 5, { stroke: '#1a1a1a', strokeWidth: 2 }),
-      rc.line(5, 45, 65, 45, { stroke: '#1a1a1a', strokeWidth: 2 }),
-      rc.path("M15 35 Q35 30 55 15", { stroke: '#1a1a1a', strokeWidth: 2 }),
-      rc.line(50, 18, 55, 15, { stroke: '#1a1a1a', strokeWidth: 2 }),
-      rc.line(55, 15, 58, 22, { stroke: '#1a1a1a', strokeWidth: 2 })
-    ];
-  }, []);
+  useEffect(() => {
+    // 1. Initial streak check
+    const currentStreak = checkAndUpdateStreak();
+    setStreak(currentStreak);
 
-  const drawRevisionBook = useMemo(() => (rc: any) => {
-    return [
-      rc.path("M10 10 Q25 8 40 12 L40 45 Q25 42 10 44 Z", { stroke: '#3a3530', strokeWidth: 2.5, roughness: 1.5 }),
-      rc.path("M40 12 Q55 8 70 10 L70 44 Q55 42 40 45 Z", { stroke: '#3a3530', strokeWidth: 2.5, roughness: 1.5 }),
-      rc.line(40, 12, 40, 45, { stroke: '#3a3530', strokeWidth: 2.5 })
-    ];
+    // 2. Initial progress check
+    const totalSheets = REVISION_SHEETS.length;
+    setProgress(getProgressPercentage(totalSheets));
+
+    // 3. Listen for progress updates
+    const handleProgressUpdate = () => {
+      setProgress(getProgressPercentage(totalSheets));
+    };
+
+    window.addEventListener('progress-updated', handleProgressUpdate);
+    return () => window.removeEventListener('progress-updated', handleProgressUpdate);
   }, []);
 
   return (
@@ -319,12 +304,12 @@ export default function Home() {
           <div className="flex flex-col md:flex-row gap-4 md:gap-6">
             {/* Daily Streak */}
             <div className="w-full md:w-[60%]">
-              <DailyStreakCard streak={5} />
+              <DailyStreakCard streak={streak} />
             </div>
 
             {/* Progress */}
             <div className="w-full md:w-[40%]">
-              <ProgressCard progress={0.65} />
+              <ProgressCard progress={progress / 100} />
             </div>
           </div>
         </div>

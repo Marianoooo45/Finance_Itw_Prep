@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, X, ZoomIn, ChevronLeft, ChevronRight } from 'lucide-react';
 import { REVISION_SHEETS } from '@/data/sheets';
+import { markSheetAsViewed } from '@/lib/user-stats';
 
 export default function CategoryPage() {
     const params = useParams();
@@ -13,6 +14,13 @@ export default function CategoryPage() {
 
     // Filtrer les fiches par slug
     const categorySheets = REVISION_SHEETS.filter(sheet => sheet.slug === slug);
+
+    // Track viewed sheet when modal is open or changed
+    useEffect(() => {
+        if (selectedIndex !== null && categorySheets[selectedIndex]) {
+            markSheetAsViewed(categorySheets[selectedIndex].id);
+        }
+    }, [selectedIndex, categorySheets]);
 
     // Nom de catégorie
     const categoryName = categorySheets.length > 0

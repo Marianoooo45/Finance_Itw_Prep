@@ -7,15 +7,16 @@ import { Play, Pause, SkipForward, SkipBack, Volume2, VolumeX } from 'lucide-rea
 const PLAYLIST = [
     { title: "ARRÊTEZ", artist: "Mastu & Théodort", src: "/music/Mastu & Théodort - ARRÊTEZ ( remix ).mp3" },
     { title: "TOP 1", artist: "Squeezie", src: "/music/SQUEEZIE - TOP 1.mp3" },
+    { title: "Dans ma folie", artist: "Pidi", src: "/music/PIDI - Dans ma folie (Clip Officiel).mp3" },
     { title: "ATM", artist: "Kameto ft. Naskid", src: "/music/ATM - Kameto (ft. Naskid).mp3" },
     { title: "GUERRIER", artist: "Doigby", src: "/music/Doigby - GUERRIER (clip officiel).mp3" },
     { title: "MILI MILI", artist: "Inoxtag", src: "/music/INOXTAG - MILI MILI (clip officiel).mp3" },
     { title: "Dans La Zone", artist: "Inoxtag", src: "/music/Inoxtag - Dans La Zone (Clip Officiel).mp3" },
     { title: "Ça va aller", artist: "Pidi", src: "/music/PIDI - Ça va aller (Clip Officiel).mp3" },
+
 ];
 
 export default function AudioPlayer() {
-    // ... (state hooks unchanged) ...
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
     const [progress, setProgress] = useState(0);
@@ -23,8 +24,6 @@ export default function AudioPlayer() {
     const [isMuted, setIsMuted] = useState(false);
 
     const audioRef = useRef<HTMLAudioElement | null>(null);
-
-    // ... (handlers handleTimeUpdate, handleProgressChange, togglePlay, nextTrack, prevTrack, useEffect auto-next formatTime unchanged) ...
 
     const handleTimeUpdate = () => {
         if (audioRef.current) {
@@ -79,92 +78,94 @@ export default function AudioPlayer() {
     };
 
     return (
-        <div className="fixed top-4 right-4 z-[100] flex flex-col items-end gap-2 font-sketch">
-            <audio
-                ref={audioRef}
-                src={PLAYLIST[currentTrackIndex].src}
-                onEnded={nextTrack}
-                onTimeUpdate={handleTimeUpdate}
-                muted={isMuted}
-            />
+        <div className="fixed bottom-4 left-0 w-full flex justify-center md:w-auto md:left-auto md:bottom-auto md:top-4 md:right-4 z-[100] font-sketch">
+            <div className="flex flex-col items-end gap-2">
+                <audio
+                    ref={audioRef}
+                    src={PLAYLIST[currentTrackIndex].src}
+                    onEnded={nextTrack}
+                    onTimeUpdate={handleTimeUpdate}
+                    muted={isMuted}
+                />
 
-            {/* SKETCHY PLAYER BAR - Updated Style */}
-            <div
-                className="
+                {/* SKETCHY PLAYER BAR - Updated Style */}
+                <div
+                    className="
             flex items-center gap-3 bg-[#e2d1a6] text-[#1a1918]
             border-2 border-[#1a1918] px-5 py-3 
             shadow-[3px_3px_0px_rgba(0,0,0,1)] 
             transition-all hover:scale-105 hover:shadow-[5px_5px_0px_rgba(0,0,0,1)]
         "
-                style={{
-                    borderRadius: '50px 255px 40px 225px / 255px 30px 225px 40px', // Forme "patate" / galet irrégulier
-                    transform: 'rotate(-2deg)'
-                }}
-            >
+                    style={{
+                        borderRadius: '50px 255px 40px 225px / 255px 30px 225px 40px', // Forme "patate" / galet irrégulier
+                        transform: 'rotate(-2deg)'
+                    }}
+                >
 
-                {/* Controls */}
-                <div className="flex items-center gap-1">
-                    <button onClick={prevTrack} className="p-1 hover:text-[#d35400] transition-colors">
-                        <SkipBack className="w-5 h-5 stroke-[3]" />
-                    </button>
+                    {/* Controls */}
+                    <div className="flex items-center gap-1">
+                        <button onClick={prevTrack} className="p-1 hover:text-[#d35400] transition-colors">
+                            <SkipBack className="w-5 h-5 stroke-[3]" />
+                        </button>
 
-                    <button
-                        onClick={togglePlay}
-                        className="
+                        <button
+                            onClick={togglePlay}
+                            className="
                     w-8 h-8 flex items-center justify-center 
                     border-2 border-[#1a1918] rounded-full mx-1
                     hover:bg-[#1a1918] hover:text-[#e2d1a6] transition-colors
                 "
-                        style={{ borderRadius: '50% 40% 60% 50% / 50% 60% 40% 50%' }}
-                    >
-                        {isPlaying ? <Pause className="w-4 h-4" fill="currentColor" /> : <Play className="w-4 h-4 ml-0.5" fill="currentColor" />}
-                    </button>
+                            style={{ borderRadius: '50% 40% 60% 50% / 50% 60% 40% 50%' }}
+                        >
+                            {isPlaying ? <Pause className="w-4 h-4" fill="currentColor" /> : <Play className="w-4 h-4 ml-0.5" fill="currentColor" />}
+                        </button>
 
-                    <button onClick={nextTrack} className="p-1 hover:text-[#d35400] transition-colors">
-                        <SkipForward className="w-5 h-5 stroke-[3]" />
-                    </button>
-                </div>
+                        <button onClick={nextTrack} className="p-1 hover:text-[#d35400] transition-colors">
+                            <SkipForward className="w-5 h-5 stroke-[3]" />
+                        </button>
+                    </div>
 
-                {/* Separator */}
-                <div className="w-[2px] h-8 bg-[#1a1918]/20 mx-1 rotate-3 rounded-full"></div>
+                    {/* Separator */}
+                    <div className="w-[2px] h-8 bg-[#1a1918]/20 mx-1 rotate-3 rounded-full"></div>
 
-                {/* Track Info & Progress */}
-                <div className="flex flex-col w-32 md:w-40 justify-center">
-                    <span className="text-xs font-bold truncate max-w-full leading-tight">
-                        {PLAYLIST[currentTrackIndex].title}
-                    </span>
-                    <span className="text-[10px] uppercase tracking-wider truncate max-w-full opacity-80 -mt-0.5">
-                        {PLAYLIST[currentTrackIndex].artist}
-                    </span>
+                    {/* Track Info & Progress */}
+                    <div className="flex flex-col w-32 md:w-40 justify-center">
+                        <span className="text-xs font-bold truncate max-w-full leading-tight">
+                            {PLAYLIST[currentTrackIndex].title}
+                        </span>
+                        <span className="text-[10px] uppercase tracking-wider truncate max-w-full opacity-80 -mt-0.5">
+                            {PLAYLIST[currentTrackIndex].artist}
+                        </span>
 
-                    <div className="flex items-center gap-2 w-full mt-1">
-                        <input
-                            type="range"
-                            min="0"
-                            max={duration || 100}
-                            value={progress}
-                            onChange={handleProgressChange}
-                            className="
+                        <div className="flex items-center gap-2 w-full mt-1">
+                            <input
+                                type="range"
+                                min="0"
+                                max={duration || 100}
+                                value={progress}
+                                onChange={handleProgressChange}
+                                className="
                         w-full h-1.5 bg-[#1a1918]/10  appearance-none cursor-pointer
                         [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 
                         [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#1a1918]
                         [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-[#e2d1a6]
                     "
-                            style={{ borderRadius: '4px' }}
-                        />
-                        <span className="text-[9px] font-mono w-7 text-right opacity-60">
-                            {formatTime(progress)}
-                        </span>
+                                style={{ borderRadius: '4px' }}
+                            />
+                            <span className="text-[9px] font-mono w-7 text-right opacity-60">
+                                {formatTime(progress)}
+                            </span>
+                        </div>
                     </div>
+
+                    {/* Mute toggle */}
+                    <div className="w-[2px] h-8 bg-[#1a1918]/20 mx-1 -rotate-2 rounded-full"></div>
+
+                    <button onClick={() => setIsMuted(!isMuted)} className="text-[#1a1918]/70 hover:text-red-500">
+                        {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                    </button>
+
                 </div>
-
-                {/* Mute toggle */}
-                <div className="w-[2px] h-8 bg-[#1a1918]/20 mx-1 -rotate-2 rounded-full"></div>
-
-                <button onClick={() => setIsMuted(!isMuted)} className="text-[#1a1918]/70 hover:text-red-500">
-                    {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-                </button>
-
             </div>
         </div>
     );
