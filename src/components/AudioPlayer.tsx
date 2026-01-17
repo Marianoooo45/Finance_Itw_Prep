@@ -31,6 +31,7 @@ const PLAYLISTS = {
         { title: "Dawn's Appeal", artist: "Pokémon Anime", src: "/music/chill/Pokémon Anime Sound Collection - Dawn's Contest Appeal [3HjyYDvLWYk].mp3" },
         { title: "Snowbelle City", artist: "Pokémon XY", src: "/music/chill/Pokémon X & Y - Snowbelle City Theme [Reorchestrated] [4nwhvedB4tc].mp3" },
         { title: "Snowbelle Orchestral", artist: "Pokémon XY", src: "/music/chill/Winter in Kalos： Snowbelle City (Cinematic Orchestral Cover) [hFc7jt3UnKU].mp3" },
+        { title: "Adagio for Strings", artist: "Barber (Vienna Phil.)", src: "/music/chill/Vienna Philharmonic – Barber Adagio for Strings, Op.11 (Summer Night Concert 2019).mp3" },
     ]
 };
 
