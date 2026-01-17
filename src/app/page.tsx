@@ -318,12 +318,12 @@ export default function Home() {
           {/* SECTION STATS - Ligne 2 (Alignement sous les cartes du haut) */}
           <div className="flex flex-col md:flex-row gap-4 md:gap-6">
             {/* Daily Streak */}
-            <div className="w-full md:w-[60%]">
+            <div className="w-full md:w-[40%]">
               <DailyStreakCard streak={streak} />
             </div>
 
             {/* Progress */}
-            <div className="w-full md:w-[40%]">
+            <div className="w-full md:w-[60%]">
               <ProgressCard progress={progress / 100} />
             </div>
           </div>
