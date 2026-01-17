@@ -183,6 +183,28 @@ export const REVISION_SHEETS: Sheet[] = [
         variant: 'kraft',
         imageUrl: '/images/equity-derivatives/Fiche 6 Equity Risk reversal le skew.png'
     },
+    {
+        id: 'eq-7',
+        title: 'Option Binaire (Digit)',
+        category: 'Equity Derivatives',
+        slug: 'equity-derivatives',
+        difficulty: 'Medium',
+        progress: 0,
+        variant: 'white',
+        imageUrl: '/images/equity-derivatives/Fiche 7 Equity Option Binaire (Digit).png'
+    },
+
+    // --- STRUCTURED PRODUCTS SHEETS ---
+    {
+        id: 'sp-1',
+        title: 'Phoenix Autocall',
+        category: 'Structured Products',
+        slug: 'structured-products',
+        difficulty: 'Medium',
+        progress: 0,
+        variant: 'white',
+        imageUrl: '/images/structured-products/Fiche 1 Produits Structurés décomposition phoenix autocall.png'
+    },
 
     // --- MOCK DATA (Other Categories) ---
     { id: '7', title: 'Macroeconomics 101', category: 'Macroeconomics', slug: 'macroeconomics', difficulty: 'Easy', progress: 90, variant: 'kraft' },
