@@ -14,6 +14,9 @@ const PLAYLISTS = {
         { title: "Dans La Zone", artist: "Inoxtag", src: "/music/troll/Inoxtag - Dans La Zone (Clip Officiel).mp3" },
         { title: "Ça va aller", artist: "Pidi", src: "/music/troll/PIDI - Ça va aller (Clip Officiel).mp3" },
         { title: "Dans ma folie", artist: "Pidi", src: "/music/troll/PIDI - Dans ma folie (Clip Officiel).mp3" },
+        { title: "La Chanson de la Joie", artist: "McFly & Carlito", src: "/music/troll/LA CHANSON DE LA JOIE (DEFI YOUTUBE WARRIOR 2 PERDU RE-UPLOAD) [E4691igUPG8].mp3" },
+        { title: "Quotidien", artist: "Mastu", src: "/music/troll/Mastu - Quotidien (gage en slip) [bxskLwoNJ_k].mp3" },
+        { title: "FIER", artist: "Michou", src: "/music/troll/Michou - FIER (Clip Officiel) [IFcxEfRO3n4].mp3" },
     ],
     focus: [
         { title: "Aria Math (Slowed)", artist: "C418", src: "/music/chill/C418 - Aria Math (Slowed + Rain).mp3" },
