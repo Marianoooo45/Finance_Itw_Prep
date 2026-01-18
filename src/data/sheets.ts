@@ -193,6 +193,16 @@ export const REVISION_SHEETS: Sheet[] = [
         variant: 'white',
         imageUrl: '/images/equity-derivatives/Fiche 7 Equity Option Binaire (Digit).png'
     },
+    {
+        id: 'eq-8',
+        title: 'Option Price Breakdown',
+        category: 'Equity Derivatives',
+        slug: 'equity-derivatives',
+        difficulty: 'Easy',
+        progress: 0,
+        variant: 'kraft',
+        imageUrl: '/images/equity-derivatives/Fiche 8 Equity Décomposition du prix d\'une option (prime).png'
+    },
 
     // --- STRUCTURED PRODUCTS SHEETS ---
     {
@@ -204,6 +214,76 @@ export const REVISION_SHEETS: Sheet[] = [
         progress: 0,
         variant: 'white',
         imageUrl: '/images/structured-products/Fiche 1 Produits Structurés décomposition phoenix autocall.png'
+    },
+    {
+        id: 'sp-2',
+        title: 'Correlation & Dispersion',
+        category: 'Structured Products',
+        slug: 'structured-products',
+        difficulty: 'Hard',
+        progress: 0,
+        variant: 'kraft',
+        imageUrl: '/images/structured-products/Fiche 2 Produits Structurés Corrélation & Dispersion.png'
+    },
+    {
+        id: 'sp-3',
+        title: 'Coupon Anatomy',
+        category: 'Structured Products',
+        slug: 'structured-products',
+        difficulty: 'Easy',
+        progress: 0,
+        variant: 'white',
+        imageUrl: '/images/structured-products/Fiche 3 Produits Structurés Anatomie du Coupon.png'
+    },
+    {
+        id: 'sp-4',
+        title: 'CMS Steepener',
+        category: 'Structured Products',
+        slug: 'structured-products',
+        difficulty: 'Hard',
+        progress: 0,
+        variant: 'white',
+        imageUrl: '/images/structured-products/Fiche 4 Produits Structurés CMS Steepener.png'
+    },
+    {
+        id: 'sp-5',
+        title: 'Range Accrual',
+        category: 'Structured Products',
+        slug: 'structured-products',
+        difficulty: 'Medium',
+        progress: 0,
+        variant: 'kraft',
+        imageUrl: '/images/structured-products/Fiche 5 Produits Structurés Range Accrual.png'
+    },
+    {
+        id: 'sp-6',
+        title: 'Phoenix Bearish CMS',
+        category: 'Structured Products',
+        slug: 'structured-products',
+        difficulty: 'Hard',
+        progress: 0,
+        variant: 'white',
+        imageUrl: '/images/structured-products/Fiche 6 Produits Structurés Phoenix Bearish CMS.png'
+    },
+    {
+        id: 'sp-7',
+        title: 'Phoenix vs Athena',
+        category: 'Structured Products',
+        slug: 'structured-products',
+        difficulty: 'Medium',
+        progress: 0,
+        variant: 'kraft',
+        imageUrl: '/images/structured-products/Fiche 7 Produits Structurés Phoenix vs Athena.png'
+    },
+    {
+        id: 'sp-8',
+        title: 'Hybrid Range Accrual',
+        category: 'Structured Products',
+        slug: 'structured-products',
+        difficulty: 'Hard',
+        progress: 0,
+        variant: 'white',
+        imageUrl: '/images/structured-products/Fiche 8 Produits Structurés Hybride Range Accrual.png'
     },
 
     // --- MOCK DATA (Other Categories) ---
