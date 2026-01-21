@@ -3,9 +3,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, X, ZoomIn, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, X, ZoomIn, ChevronLeft, ChevronRight, TrendingUp } from 'lucide-react';
 import { REVISION_SHEETS } from '@/data/sheets';
 import { markSheetAsViewed } from '@/lib/user-stats';
+import MacroDashboard from '@/components/MacroDashboard';
 
 // Global Audio (Persist across navigation)
 let globalBackAudio: HTMLAudioElement | null = null;
@@ -86,7 +87,7 @@ export default function CategoryPage() {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [selectedIndex, handlePrev, handleNext]);
 
-    if (!categorySheets.length) {
+    if (!categorySheets.length && slug !== 'macroeconomics') {
         return (
             <div className="min-h-screen bg-[#1a1918] text-[#e2d1a6] p-10 flex flex-col items-center justify-center font-sketch">
                 <h1 className="text-4xl mb-4">Classified Information</h1>
@@ -126,6 +127,30 @@ export default function CategoryPage() {
                     <p className="text-[#e2d1a6]/60 font-mono mt-2 uppercase tracking-[0.2em] text-sm">
                         Confidential Revision Materials
                     </p>
+
+                    {/* MACRO DASHBOARD SHORTCUT */}
+                    {slug === 'macroeconomics' && (
+                        <div className="mt-8 flex justify-center">
+                            <Link href="/revision-sheets/macroeconomics/dashboard">
+                                <button
+                                    className="
+                                        group relative px-8 py-3 font-sketch text-2xl text-[#1a1918] bg-[#e2d1a6]
+                                        border-2 border-[#1a1918] transition-all duration-300
+                                        hover:scale-105 active:scale-95
+                                        shadow-[3px_3px_0px_#1a1918] hover:shadow-[5px_5px_0px_#1a1918]
+                                        flex items-center gap-3
+                                    "
+                                    style={{
+                                        borderRadius: '255px 15px 225px 15px / 15px 225px 15px 255px',
+                                        transform: 'rotate(-1deg)'
+                                    }}
+                                >
+                                    <TrendingUp className="w-6 h-6 stroke-[3]" />
+                                    OPEN MACRO BOARD
+                                </button>
+                            </Link>
+                        </div>
+                    )}
                 </div>
             </div>
 

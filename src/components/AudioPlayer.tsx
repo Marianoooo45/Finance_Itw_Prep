@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { Play, Pause, SkipForward, SkipBack, Volume2, VolumeX } from 'lucide-react';
 
 // 🎵 LISTE DES PISTES
@@ -121,6 +122,12 @@ export default function AudioPlayer() {
 
     if (!mounted) return null;
 
+    // STYLES
+    const containerClasses = "flex items-center gap-3 bg-[#e2d1a6] text-[#1a1918] border-2 border-[#1a1918] px-5 py-3 shadow-[3px_3px_0px_rgba(0,0,0,1)] transition-all duration-300 relative z-20";
+
+    // Pour les boutons, on adapte la bordure et le hover
+    const playButtonClasses = "w-8 h-8 flex items-center justify-center border-2 border-[#1a1918] rounded-full mx-1 hover:bg-[#1a1918] hover:text-[#e2d1a6] transition-colors";
+
     return (
         <div className="hidden md:flex fixed top-4 right-4 z-[100] flex-col items-end gap-2 font-sketch">
             <div className="flex flex-col items-end gap-0">
@@ -134,12 +141,7 @@ export default function AudioPlayer() {
 
                 {/* SKETCHY PLAYER BAR */}
                 <div
-                    className="
-            flex items-center gap-3 bg-[#e2d1a6] text-[#1a1918]
-            border-2 border-[#1a1918] px-5 py-3 
-            shadow-[3px_3px_0px_rgba(0,0,0,1)] 
-            transition-all duration-300 relative z-20
-        "
+                    className={containerClasses}
                     style={{
                         borderRadius: '50px 255px 40px 225px / 255px 30px 225px 40px',
                         transform: 'rotate(-2deg)'
@@ -148,29 +150,25 @@ export default function AudioPlayer() {
 
                     {/* Controls */}
                     <div className="flex items-center gap-1">
-                        <button onClick={prevTrack} className="p-1 hover:text-[#d35400] transition-colors">
+                        <button onClick={prevTrack} className="p-1 transition-colors hover:text-[#d35400]">
                             <SkipBack className="w-5 h-5 stroke-[3]" />
                         </button>
 
                         <button
                             onClick={togglePlay}
-                            className="
-                    w-8 h-8 flex items-center justify-center 
-                    border-2 border-[#1a1918] rounded-full mx-1
-                    hover:bg-[#1a1918] hover:text-[#e2d1a6] transition-colors
-                "
+                            className={playButtonClasses}
                             style={{ borderRadius: '50% 40% 60% 50% / 50% 60% 40% 50%' }}
                         >
                             {isPlaying ? <Pause className="w-4 h-4" fill="currentColor" /> : <Play className="w-4 h-4 ml-0.5" fill="currentColor" />}
                         </button>
 
-                        <button onClick={nextTrack} className="p-1 hover:text-[#d35400] transition-colors">
+                        <button onClick={nextTrack} className="p-1 transition-colors hover:text-[#d35400]">
                             <SkipForward className="w-5 h-5 stroke-[3]" />
                         </button>
                     </div>
 
                     {/* Separator */}
-                    <div className="w-[2px] h-8 bg-[#1a1918]/20 mx-1 rotate-3 rounded-full"></div>
+                    <div className="w-[2px] h-8 mx-1 rotate-3 rounded-full bg-[#1a1918]/20"></div>
 
                     {/* Track Info & Progress */}
                     <div className="flex flex-col w-32 md:w-40 justify-center">
@@ -188,12 +186,13 @@ export default function AudioPlayer() {
                                 max={duration || 100}
                                 value={progress}
                                 onChange={handleProgressChange}
-                                className="
-                        w-full h-1.5 bg-[#1a1918]/10  appearance-none cursor-pointer
-                        [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 
-                        [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#1a1918]
-                        [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-[#e2d1a6]
-                    "
+                                className={`
+                                    w-full h-1.5 appearance-none cursor-pointer
+                                    [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 
+                                    [&::-webkit-slider-thumb]:rounded-full 
+                                    [&::-webkit-slider-thumb]:border-2 
+                                    bg-[#1a1918]/10 [&::-webkit-slider-thumb]:bg-[#1a1918] [&::-webkit-slider-thumb]:border-[#e2d1a6]
+                                `}
                                 style={{ borderRadius: '4px' }}
                             />
                             <span className="text-[9px] font-mono w-7 text-right opacity-60">
@@ -203,9 +202,9 @@ export default function AudioPlayer() {
                     </div>
 
                     {/* Mute Only */}
-                    <div className="w-[2px] h-8 bg-[#1a1918]/20 mx-1 -rotate-2 rounded-full"></div>
+                    <div className="w-[2px] h-8 mx-1 -rotate-2 rounded-full bg-[#1a1918]/20"></div>
 
-                    <button onClick={() => setIsMuted(!isMuted)} className="text-[#1a1918]/70 hover:text-red-500" title="Mute/Unmute">
+                    <button onClick={() => setIsMuted(!isMuted)} className="hover:text-red-500 text-[#1a1918]/70" title="Mute/Unmute">
                         {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
                     </button>
 
@@ -215,10 +214,10 @@ export default function AudioPlayer() {
                 <div
                     className="
             mt-[-12px] mr-8 z-10 
-            bg-[#e2d1a6] text-[#1a1918] 
             px-3 py-2 pt-4
-            border-x-2 border-b-2 border-[#1a1918] rounded-b-xl
+            border-x-2 border-b-2 rounded-b-xl
             flex items-center gap-2 shadow-lg
+            bg-[#e2d1a6] text-[#1a1918] border-[#1a1918]
         "
                     style={{ transform: 'rotate(1deg)' }}
                 >
@@ -226,11 +225,11 @@ export default function AudioPlayer() {
 
                     <button
                         onClick={togglePlaylist}
-                        className="w-10 h-5 bg-[#1a1918] rounded-full relative flex items-center px-0.5 cursor-pointer hover:opacity-90 transition-opacity"
+                        className="w-10 h-5 rounded-full relative flex items-center px-0.5 cursor-pointer hover:opacity-90 transition-opacity bg-[#1a1918]"
                         title="Switch Playlist"
                     >
                         <div
-                            className={`w-4 h-4 bg-[#e2d1a6] rounded-full shadow-sm transform transition-transform duration-300 ${activePlaylist === 'troll' ? 'translate-x-5' : 'translate-x-0'}`}
+                            className={`w-4 h-4 rounded-full shadow-sm transform transition-transform duration-300 bg-[#e2d1a6] ${activePlaylist === 'troll' ? 'translate-x-5' : 'translate-x-0'}`}
                         />
                     </button>
 
