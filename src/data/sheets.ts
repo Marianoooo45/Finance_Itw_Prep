@@ -7,119 +7,196 @@ export type Sheet = {
     variant: 'kraft' | 'white';
     imageUrl?: string;
     slug: string;
+    section?: string;
 };
 
 export const REVISION_SHEETS: Sheet[] = [
-    // --- RATES & FIXED INCOME SHEETS ---
     {
         id: 'fi-1',
-        title: 'Cap & Floor Mechanics',
-        category: 'Rates & Fixed Income',
-        slug: 'rates-fixed-income',
-        difficulty: 'Easy',
-        progress: 0,
-        variant: 'kraft',
-        imageUrl: '/images/rates-fixed-income/Fiche 1 FIC cap floor.png'
-    },
-    {
-        id: 'fi-2',
-        title: 'Swaptions & FRA',
-        category: 'Rates & Fixed Income',
-        slug: 'rates-fixed-income',
-        difficulty: 'Easy',
-        progress: 0,
-        variant: 'white',
-        imageUrl: '/images/rates-fixed-income/Fiche 2 FIC swaption FRA.png'
-    },
-    {
-        id: 'fi-3',
         title: 'Indices & Curves',
         category: 'Rates & Fixed Income',
         slug: 'rates-fixed-income',
         difficulty: 'Easy',
         progress: 0,
         variant: 'kraft',
-        imageUrl: '/images/rates-fixed-income/Fiche 3 FIC indices et courbes.png'
+        imageUrl: '/images/rates-fixed-income/Fiche 1 FIC Indices et Courbes.png',
+        section: 'CHAPITRE 1 : LE SOCLE TECHNIQUE'
     },
     {
-        id: 'fi-4',
-        title: 'Bond Math (Sensis)',
-        category: 'Rates & Fixed Income',
-        slug: 'rates-fixed-income',
-        difficulty: 'Easy',
-        progress: 0,
-        variant: 'white',
-        imageUrl: '/images/rates-fixed-income/Fiche 4 FIC bond math (sensis).png'
-    },
-    {
-        id: 'fi-5',
-        title: 'Spread & Valo',
-        category: 'Rates & Fixed Income',
-        slug: 'rates-fixed-income',
-        difficulty: 'Easy',
-        progress: 0,
-        variant: 'kraft',
-        imageUrl: '/images/rates-fixed-income/Fiche 5 FIC spread & valo.png'
-    },
-    {
-        id: 'fi-6',
-        title: 'Inflation Derivatives',
-        category: 'Rates & Fixed Income',
-        slug: 'rates-fixed-income',
-        difficulty: 'Medium',
-        progress: 0,
-        variant: 'white',
-        imageUrl: '/images/rates-fixed-income/Fiche 6 FIC infla.png'
-    },
-    {
-        id: 'fi-7',
-        title: 'The Greeks (Risk)',
-        category: 'Rates & Fixed Income',
-        slug: 'rates-fixed-income',
-        difficulty: 'Hard',
-        progress: 0,
-        variant: 'kraft',
-        imageUrl: '/images/rates-fixed-income/Fiche 7 FIC greeks.png'
-    },
-    {
-        id: 'fi-8',
+        id: 'fi-2',
         title: 'RFR vs IBOR',
         category: 'Rates & Fixed Income',
         slug: 'rates-fixed-income',
+        difficulty: 'Easy',
+        progress: 0,
+        variant: 'white',
+        imageUrl: '/images/rates-fixed-income/Fiche 2 FIC RFR vs IBOR.png',
+        section: 'CHAPITRE 1 : LE SOCLE TECHNIQUE'
+    },
+    {
+        id: 'fi-3',
+        title: 'DELTA (Inclut DV01 et Duration)',
+        category: 'Rates & Fixed Income',
+        slug: 'rates-fixed-income',
         difficulty: 'Medium',
         progress: 0,
         variant: 'white',
-        imageUrl: '/images/rates-fixed-income/Fiche 8 RFR vs IBOR .png'
+        imageUrl: '/images/rates-fixed-income/Fiche 3 FIC DELTA.png',
+        section: 'CHAPITRE 1 : LE SOCLE TECHNIQUE'
+    },
+    {
+        id: 'fi-4',
+        title: 'GAMMA (Inclut Convexité)',
+        category: 'Rates & Fixed Income',
+        slug: 'rates-fixed-income',
+        difficulty: 'Medium',
+        progress: 0,
+        variant: 'kraft',
+        imageUrl: '/images/rates-fixed-income/Fiche 4 FIC Gamma Convexity.png',
+        section: 'CHAPITRE 1 : LE SOCLE TECHNIQUE'
+    },
+    {
+        id: 'fi-5',
+        title: 'VEGA (La Volatilité)',
+        category: 'Rates & Fixed Income',
+        slug: 'rates-fixed-income',
+        difficulty: 'Medium',
+        progress: 0,
+        variant: 'kraft',
+        imageUrl: '/images/rates-fixed-income/Fiche 5 FIC VEGA.png',
+        section: 'CHAPITRE 1 : LE SOCLE TECHNIQUE'
+    },
+    {
+        id: 'fi-6',
+        title: 'THETA (Le Temps)',
+        category: 'Rates & Fixed Income',
+        slug: 'rates-fixed-income',
+        difficulty: 'Medium',
+        progress: 0,
+        variant: 'white',
+        imageUrl: '/images/rates-fixed-income/Fiche 6 FIC THETA.png',
+        section: 'CHAPITRE 1 : LE SOCLE TECHNIQUE'
+    },
+    {
+        id: 'fi-7',
+        title: 'RHO (Taux)',
+        category: 'Rates & Fixed Income',
+        slug: 'rates-fixed-income',
+        difficulty: 'Medium',
+        progress: 0,
+        variant: 'kraft',
+        imageUrl: '/images/rates-fixed-income/Fiche 7 FIC RHO.png',
+        section: 'CHAPITRE 1 : LE SOCLE TECHNIQUE'
+    },
+    {
+        id: 'fi-8',
+        title: 'GREEKS (Tableau Recap)',
+        category: 'Rates & Fixed Income',
+        slug: 'rates-fixed-income',
+        difficulty: 'Medium',
+        progress: 0,
+        variant: 'white',
+        imageUrl: '/images/rates-fixed-income/Fiche 8 FIC Recap Greeks.png',
+        section: 'CHAPITRE 1 : LE SOCLE TECHNIQUE'
     },
     {
         id: 'fi-9',
-        title: 'Swaptions',
+        title: 'Interest Rate Swaps (IRS)',
         category: 'Rates & Fixed Income',
         slug: 'rates-fixed-income',
-        difficulty: 'Hard',
+        difficulty: 'Medium',
         progress: 0,
-        variant: 'kraft',
-        imageUrl: '/images/rates-fixed-income/Fiche 9 Swaptions.png'
+        variant: 'white',
+        imageUrl: '/images/rates-fixed-income/Fiche 9 FIC IRS.png',
+        section: 'CHAPITRE 2 : L\'ARSENAL PRODUITS'
     },
     {
         id: 'fi-10',
-        title: 'Cap & Floor (Technical)',
-        category: 'Rates & Fixed Income',
-        slug: 'rates-fixed-income',
-        difficulty: 'Hard',
-        progress: 0,
-        variant: 'white',
-        imageUrl: '/images/rates-fixed-income/Fiche 10 FIC Fiche Technique Cap & Floor.png'
-    },
-    {
-        id: 'fi-11',
         title: 'Swap Rates (Technical)',
         category: 'Rates & Fixed Income',
         slug: 'rates-fixed-income',
         difficulty: 'Hard',
         progress: 0,
         variant: 'kraft',
-        imageUrl: '/images/rates-fixed-income/Fiche 11 FIC Fiche Technique Le Taux de Swap (Par Swap Rate).png'
+        imageUrl: '/images/rates-fixed-income/Fiche 10 FIC Swap Rates.png',
+        section: 'CHAPITRE 2 : L\'ARSENAL PRODUITS'
+    },
+    {
+        id: 'fi-11',
+        title: 'Cap & Floor Mechanics',
+        category: 'Rates & Fixed Income',
+        slug: 'rates-fixed-income',
+        difficulty: 'Easy',
+        progress: 0,
+        variant: 'kraft',
+        imageUrl: '/images/rates-fixed-income/Fiche 11 FIC Cap Floor Mechanics.png',
+        section: 'CHAPITRE 2 : L\'ARSENAL PRODUITS'
+    },
+    {
+        id: 'fi-12',
+        title: 'Cap & Floor (Technical)',
+        category: 'Rates & Fixed Income',
+        slug: 'rates-fixed-income',
+        difficulty: 'Hard',
+        progress: 0,
+        variant: 'white',
+        imageUrl: '/images/rates-fixed-income/Fiche 12 FIC Cap Floor Technical.png',
+        section: 'CHAPITRE 2 : L\'ARSENAL PRODUITS'
+    },
+    {
+        id: 'fi-13',
+        title: 'Swaptions & FRA',
+        category: 'Rates & Fixed Income',
+        slug: 'rates-fixed-income',
+        difficulty: 'Easy',
+        progress: 0,
+        variant: 'white',
+        imageUrl: '/images/rates-fixed-income/Fiche 13 FIC Swaptions FRA.png',
+        section: 'CHAPITRE 2 : L\'ARSENAL PRODUITS'
+    },
+    {
+        id: 'fi-14',
+        title: 'Swaptions',
+        category: 'Rates & Fixed Income',
+        slug: 'rates-fixed-income',
+        difficulty: 'Medium',
+        progress: 0,
+        variant: 'kraft',
+        imageUrl: '/images/rates-fixed-income/Fiche 14 FIC Swaptions Deep Dive.png',
+        section: 'CHAPITRE 2 : L\'ARSENAL PRODUITS'
+    },
+    {
+        id: 'fi-15',
+        title: 'Pricing Sales',
+        category: 'Rates & Fixed Income',
+        slug: 'rates-fixed-income',
+        difficulty: 'Medium',
+        progress: 0,
+        variant: 'kraft',
+        imageUrl: '/images/rates-fixed-income/Fiche 15 FIC Pricing Sales.png',
+        section: 'CHAPITRE 3 : LE CLOSING SALES & VALO'
+    },
+    {
+        id: 'fi-16',
+        title: 'Spread & Valo',
+        category: 'Rates & Fixed Income',
+        slug: 'rates-fixed-income',
+        difficulty: 'Easy',
+        progress: 0,
+        variant: 'kraft',
+        imageUrl: '/images/rates-fixed-income/Fiche 16 FIC Spread Valo.png',
+        section: 'CHAPITRE 3 : LE CLOSING SALES & VALO'
+    },
+    {
+        id: 'fi-17',
+        title: 'Inflation Derivatives',
+        category: 'Rates & Fixed Income',
+        slug: 'rates-fixed-income',
+        difficulty: 'Medium',
+        progress: 0,
+        variant: 'white',
+        imageUrl: '/images/rates-fixed-income/Fiche 17 FIC Inflation.png',
+        section: 'CHAPITRE 3 : LE CLOSING SALES & VALO'
     },
 
     // --- EQUITY DERIVATIVES SHEETS ---

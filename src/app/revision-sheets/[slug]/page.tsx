@@ -120,7 +120,7 @@ export default function CategoryPage() {
                 </Link>
 
                 <div className="w-full text-center">
-                    <h1 className="text-4xl md:text-6xl font-sketch text-[#e2d1a6] tracking-wider relative z-10 uppercase">
+                    <h1 className="text-4xl md:text-6xl special-elite-regular text-[#e2d1a6] tracking-wider relative z-10 uppercase">
                         {categoryName}
                     </h1>
                     <p className="text-[#e2d1a6]/60 font-mono mt-2 uppercase tracking-[0.2em] text-sm">
@@ -130,61 +130,77 @@ export default function CategoryPage() {
             </div>
 
             {/* GRID */}
-            <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12">
-                {categorySheets.map((sheet, index) => (
-                    <div key={sheet.id} className="flex flex-col gap-4">
-                        {/* Titre de la fiche */}
-                        <div className="flex items-center gap-4">
-                            <span className="text-[#e2d1a6] font-mono text-xl opacity-50">#{sheet.id.toUpperCase()}</span>
-                            <h2 className="text-2xl md:text-3xl font-sketch text-white">{sheet.title}</h2>
-                        </div>
+            <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 content-start">
+                {categorySheets.map((sheet, index) => {
+                    // Check if we need to render a section header
+                    const prevSection = index > 0 ? categorySheets[index - 1].section : null;
+                    const showSectionHeader = sheet.section && sheet.section !== prevSection;
 
-                        {/* Cadre Image (Cliquable) */}
-                        <div
-                            className="relative group w-full aspect-[4/3] bg-[#f8f6f0] p-2 rotate-1 hover:rotate-0 transition-transform duration-300 shadow-2xl rounded-sm cursor-pointer"
-                            onClick={() => sheet.imageUrl && setSelectedIndex(index)}
-                            onMouseDown={playOpenSheet}
-                        >
-                            {/* Coin "Scotch" */}
-                            <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-32 h-8 bg-white/20 backdrop-blur-sm rotate-[-2deg] z-10 border-l border-r border-white/10 pointer-events-none" />
+                    return (
+                        <React.Fragment key={sheet.id}>
+                            {showSectionHeader && (
+                                <div className="col-span-1 lg:col-span-2 mt-8 mb-4 border-b-2 border-[#e2d1a6] pb-2">
+                                    <h3 className="special-elite-regular text-2xl md:text-3xl text-[#e2d1a6] tracking-widest uppercase">
+                                        {sheet.section}
+                                    </h3>
+                                </div>
+                            )}
 
-                            <div className="w-full h-full border-2 border-[#1a1918] overflow-hidden bg-white relative">
-                                {sheet.imageUrl ? (
-                                    <img
-                                        src={sheet.imageUrl}
-                                        alt={sheet.title}
-                                        className="w-full h-full object-contain p-2"
-                                    />
-                                ) : (
-                                    <div className="w-full h-full flex items-center justify-center text-gray-400 font-sketch">
-                                        [TOP SECRET IMAGE MISSING]
+                            <div className="flex flex-col gap-4">
+                                {/* Titre de la fiche */}
+                                <div className="flex items-center gap-4">
+                                    <span className="text-[#e2d1a6] font-mono text-xl opacity-50">#{sheet.id.toUpperCase()}</span>
+                                    <h2 className="text-2xl md:text-3xl special-elite-regular text-white">{sheet.title}</h2>
+                                </div>
+
+                                {/* Cadre Image (Cliquable) */}
+                                <div
+                                    className="relative group w-full aspect-[4/3] bg-[#f8f6f0] p-2 rotate-1 hover:rotate-0 transition-transform duration-300 shadow-2xl rounded-sm cursor-pointer"
+                                    onClick={() => sheet.imageUrl && setSelectedIndex(index)}
+                                    onMouseDown={playOpenSheet}
+                                >
+                                    {/* Coin "Scotch" */}
+                                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-32 h-8 bg-white/20 backdrop-blur-sm rotate-[-2deg] z-10 border-l border-r border-white/10 pointer-events-none" />
+
+                                    <div className="w-full h-full border-2 border-[#1a1918] overflow-hidden bg-white relative">
+                                        {sheet.imageUrl ? (
+                                            <img
+                                                src={sheet.imageUrl}
+                                                alt={sheet.title}
+                                                className="w-full h-full object-contain p-2"
+                                            />
+                                        ) : (
+                                            <div className="w-full h-full flex items-center justify-center text-gray-400 font-sketch">
+                                                [TOP SECRET IMAGE MISSING]
+                                            </div>
+                                        )}
                                     </div>
-                                )}
-                            </div>
-                        </div>
+                                </div>
 
-                        {/* Footer: Metadata & VIEW Button */}
-                        <div className="flex items-end justify-between px-2">
-                            <div className="flex flex-col text-[#e2d1a6]/80 font-mono text-sm">
-                                <span>Difficulty: {sheet.difficulty}</span>
-                                <span>Type: {sheet.variant.toUpperCase()}</span>
-                            </div>
+                                {/* Footer: Metadata & VIEW Button */}
+                                <div className="flex items-end justify-between px-2">
+                                    <div className="flex flex-col text-[#e2d1a6]/80 font-mono text-sm">
+                                        <span>Difficulty: {sheet.difficulty}</span>
+                                        <span>Type: {sheet.variant.toUpperCase()}</span>
+                                    </div>
 
-                            <button
-                                onClick={() => sheet.imageUrl && setSelectedIndex(index)}
-                                onMouseDown={playOpenSheet}
-                                className="
+                                    <button
+                                        onClick={() => sheet.imageUrl && setSelectedIndex(index)}
+                                        onMouseDown={playOpenSheet}
+                                        className="
                     px-5 py-1 font-sketch text-lg border-2 border-black bg-[#e2d1a6] text-black 
                     hover:bg-white hover:scale-105 transition-all cursor-pointer
                     shadow-[2px_2px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-[2px] active:translate-y-[2px]
                   "
-                                style={{ borderRadius: '255px 15px 225px 15px / 15px 225px 15px 255px' }}
-                            >
-                                VIEW
-                            </button>
-                        </div>
-                    </div>
-                ))}
+                                        style={{ borderRadius: '255px 15px 225px 15px / 15px 225px 15px 255px' }}
+                                    >
+                                        VIEW
+                                    </button>
+                                </div>
+                            </div>
+                        </React.Fragment>
+                    );
+                })}
             </div>
 
             {/* MODAL LIGHTBOX WITH NAVIGATION */}
@@ -233,7 +249,7 @@ export default function CategoryPage() {
 
                     {/* Title Overlay in Modal */}
                     <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center pointer-events-none">
-                        <h3 className="text-[#e2d1a6] font-sketch text-2xl drop-shadow-md bg-black/60 px-4 py-1 rounded">
+                        <h3 className="text-[#e2d1a6] special-elite-regular text-2xl drop-shadow-md bg-black/60 px-4 py-1 rounded">
                             {categorySheets[selectedIndex].title} ({selectedIndex + 1}/{categorySheets.length})
                         </h3>
                     </div>

@@ -66,10 +66,10 @@ export default function RevisionSheetsPage() {
 
                 {/* Title */}
                 <div className="relative mb-12 text-center">
-                    <h1 className="text-4xl md:text-6xl font-sketch text-[#e2d1a6] tracking-wider relative z-10 uppercase">
+                    <h1 className="text-4xl md:text-6xl cabin-sketch-bold text-[#e2d1a6] tracking-wider relative z-10 uppercase">
                         Start Revising
                     </h1>
-                    <p className="text-[#e2d1a6]/60 font-mono mt-2 uppercase tracking-[0.2em] text-sm">
+                    <p className="text-[#e2d1a6]/60 cabin-sketch-regular mt-2 uppercase tracking-[0.2em] text-sm">
                         Select a Topic to Open its File
                     </p>
                 </div>
@@ -102,7 +102,7 @@ export default function RevisionSheetsPage() {
 
                                 <FolderOpen className="w-12 h-12 mb-4 text-[#1a1918] opacity-80 group-hover:scale-110 transition-transform" strokeWidth={1.5} />
 
-                                <h3 className="font-sketch text-[#1a1918] text-3xl mb-2 uppercase tracking-tight">
+                                <h3 className="special-elite-regular text-[#1a1918] text-3xl mb-2 uppercase tracking-tight">
                                     {cat.title}
                                 </h3>
 
@@ -112,7 +112,7 @@ export default function RevisionSheetsPage() {
 
                                 {/* Action Hint */}
                                 <div className="mt-auto pt-6 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <span className="font-sketch text-lg border-b-2 border-black">OPEN FILE</span>
+                                    <span className="special-elite-regular text-lg border-b-2 border-black">OPEN FILE</span>
                                 </div>
                             </div>
                         </div>
