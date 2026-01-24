@@ -200,6 +200,9 @@ export const REVISION_SHEETS: Sheet[] = [
     },
 
     // --- EQUITY DERIVATIVES SHEETS ---
+
+    // CHAPITRE 1 : PRICING & THÉORIE (Les Maths)
+    // CHAPITRE 1 : PRICING & THÉORIE (Les Maths)
     {
         id: 'eq-1',
         title: 'Call & Put Basics',
@@ -208,67 +211,41 @@ export const REVISION_SHEETS: Sheet[] = [
         difficulty: 'Easy',
         progress: 0,
         variant: 'white',
-        imageUrl: '/images/equity-derivatives/Fiche 1 Equity Call & Put.png'
+        imageUrl: '/images/equity-derivatives/Fiche 1 Equity Call & Put.png',
+        section: 'CHAPITRE 1 : PRICING & THÉORIE'
     },
     {
-        id: 'eq-2',
-        title: 'Call Spread & Butterfly',
+        id: 'eq-11',
+        title: 'Black Scholes Formula',
         category: 'Equity Derivatives',
         slug: 'equity-derivatives',
-        difficulty: 'Medium',
-        progress: 0,
-        variant: 'kraft',
-        imageUrl: '/images/equity-derivatives/Fiche 2 Equity stratégies call spread et buttefly.png'
-    },
-    {
-        id: 'eq-3',
-        title: 'Put Down-and-In',
-        category: 'Equity Derivatives',
-        slug: 'equity-derivatives',
-        difficulty: 'Easy',
+        difficulty: 'Hard',
         progress: 0,
         variant: 'white',
-        imageUrl: '/images/equity-derivatives/Fiche 3 Equity Put down-and-in.png'
+        imageUrl: '/images/equity-derivatives/Fiche 11 Equity Black Scholes Formula.png',
+        section: 'CHAPITRE 1 : PRICING & THÉORIE'
     },
     {
-        id: 'eq-4',
-        title: 'The Greeks (Equity)',
+        id: 'eq-12',
+        title: 'Black Scholes Assumptions',
         category: 'Equity Derivatives',
         slug: 'equity-derivatives',
         difficulty: 'Hard',
         progress: 0,
         variant: 'kraft',
-        imageUrl: '/images/equity-derivatives/Fiche 4 Equity Les Grecs sensibilités aux facteurs de risque.png'
+        imageUrl: '/images/equity-derivatives/Fiche 12 Equity Black Scholes Formula Suite.png',
+        section: 'CHAPITRE 1 : PRICING & THÉORIE'
     },
     {
-        id: 'eq-5',
-        title: 'Straddle vs Strangle',
+        id: 'eq-10',
+        title: 'Call-Put Parity',
         category: 'Equity Derivatives',
         slug: 'equity-derivatives',
         difficulty: 'Medium',
-        progress: 0,
-        variant: 'white',
-        imageUrl: '/images/equity-derivatives/Fiche 5 Equity stratégies straddle vs strangle.png'
-    },
-    {
-        id: 'eq-6',
-        title: 'Risk Reversal & Skew',
-        category: 'Equity Derivatives',
-        slug: 'equity-derivatives',
-        difficulty: 'Hard',
         progress: 0,
         variant: 'kraft',
-        imageUrl: '/images/equity-derivatives/Fiche 6 Equity Risk reversal le skew.png'
-    },
-    {
-        id: 'eq-7',
-        title: 'Option Binaire (Digit)',
-        category: 'Equity Derivatives',
-        slug: 'equity-derivatives',
-        difficulty: 'Medium',
-        progress: 0,
-        variant: 'white',
-        imageUrl: '/images/equity-derivatives/Fiche 7 Equity Option Binaire (Digit).png'
+        imageUrl: '/images/equity-derivatives/Fiche 10 Equity Parité Call Put.png',
+        section: 'CHAPITRE 1 : PRICING & THÉORIE'
     },
     {
         id: 'eq-8',
@@ -278,19 +255,116 @@ export const REVISION_SHEETS: Sheet[] = [
         difficulty: 'Easy',
         progress: 0,
         variant: 'kraft',
-        imageUrl: '/images/equity-derivatives/Fiche 8 Equity Décomposition du prix d\'une option (prime).png'
+        imageUrl: '/images/equity-derivatives/Fiche 8 Equity Décomposition du prix d\'une option (prime).png',
+        section: 'CHAPITRE 1 : PRICING & THÉORIE'
     },
-
-    // --- STRUCTURED PRODUCTS SHEETS ---
     {
-        id: 'sp-1',
-        title: 'Phoenix Autocall',
-        category: 'Structured Products',
-        slug: 'structured-products',
+        id: 'eq-4',
+        title: 'The Greeks (Equity)',
+        category: 'Equity Derivatives',
+        slug: 'equity-derivatives',
+        difficulty: 'Hard',
+        progress: 0,
+        variant: 'kraft',
+        imageUrl: '/images/equity-derivatives/Fiche 4 Equity Les Grecs sensibilités aux facteurs de risque.png',
+        section: 'CHAPITRE 1 : PRICING & THÉORIE'
+    },
+    {
+        id: 'eq-13',
+        title: 'Volatility (Equity)',
+        category: 'Equity Derivatives',
+        slug: 'equity-derivatives',
         difficulty: 'Medium',
         progress: 0,
         variant: 'white',
-        imageUrl: '/images/structured-products/Fiche 1 Produits Structurés décomposition phoenix autocall.png'
+        imageUrl: '/images/equity-derivatives/Fiche 13 Equity La volatilité eqd.png',
+        section: 'CHAPITRE 1 : PRICING & THÉORIE'
+    },
+
+    // CHAPITRE 2 : STRATÉGIES DE TRADING (Le Flow)
+    {
+        id: 'eq-2',
+        title: 'Call Spread & Butterfly',
+        category: 'Equity Derivatives',
+        slug: 'equity-derivatives',
+        difficulty: 'Medium',
+        progress: 0,
+        variant: 'kraft',
+        imageUrl: '/images/equity-derivatives/Fiche 2 Equity stratégies call spread et buttefly.png',
+        section: 'CHAPITRE 2 : STRATÉGIES DE TRADING'
+    },
+    {
+        id: 'eq-5',
+        title: 'Straddle vs Strangle',
+        category: 'Equity Derivatives',
+        slug: 'equity-derivatives',
+        difficulty: 'Medium',
+        progress: 0,
+        variant: 'white',
+        imageUrl: '/images/equity-derivatives/Fiche 5 Equity stratégies straddle vs strangle.png',
+        section: 'CHAPITRE 2 : STRATÉGIES DE TRADING'
+    },
+    {
+        id: 'eq-6',
+        title: 'Risk Reversal & Skew',
+        category: 'Equity Derivatives',
+        slug: 'equity-derivatives',
+        difficulty: 'Hard',
+        progress: 0,
+        variant: 'kraft',
+        imageUrl: '/images/equity-derivatives/Fiche 6 Equity Risk reversal le skew.png',
+        section: 'CHAPITRE 2 : STRATÉGIES DE TRADING'
+    },
+
+    // CHAPITRE 3 : STRUCTURATION & EXOTIQUES (Le Job EMI)
+    {
+        id: 'eq-7',
+        title: 'Option Binaire (Digit)',
+        category: 'Equity Derivatives',
+        slug: 'equity-derivatives',
+        difficulty: 'Medium',
+        progress: 0,
+        variant: 'white',
+        imageUrl: '/images/equity-derivatives/Fiche 7 Equity Option Binaire (Digit).png',
+        section: 'CHAPITRE 3 : STRUCTURATION & EXOTIQUES'
+    },
+    {
+        id: 'eq-3',
+        title: 'Put Down-and-In',
+        category: 'Equity Derivatives',
+        slug: 'equity-derivatives',
+        difficulty: 'Easy',
+        progress: 0,
+        variant: 'white',
+        imageUrl: '/images/equity-derivatives/Fiche 3 Equity Put down-and-in.png',
+        section: 'CHAPITRE 3 : STRUCTURATION & EXOTIQUES'
+    },
+    {
+        id: 'eq-9',
+        title: 'Replication & Hedging PDI',
+        category: 'Equity Derivatives',
+        slug: 'equity-derivatives',
+        difficulty: 'Hard',
+        progress: 0,
+        variant: 'white',
+        imageUrl: '/images/equity-derivatives/Fiche 9 Equity Réplication & Hedging du PDI.png',
+        section: 'CHAPITRE 3 : STRUCTURATION & EXOTIQUES'
+    },
+
+    // --- STRUCTURED PRODUCTS SHEETS ---
+    // --- STRUCTURED PRODUCTS SHEETS ---
+
+    // CHAPITRE 1 : THÉORIE & BASES
+    {
+        id: 'sp-3',
+        title: 'Coupon Anatomy',
+        category: 'Structured Products',
+        slug: 'structured-products',
+        difficulty: 'Easy',
+        progress: 0,
+        variant: 'white',
+        imageUrl: '/images/structured-products/Fiche 3 Produits Structurés Anatomie du Coupon.png',
+        section: 'CHAPITRE 1 : THÉORIE & BASES'
     },
     {
         id: 'sp-2',
@@ -300,47 +374,21 @@ export const REVISION_SHEETS: Sheet[] = [
         difficulty: 'Hard',
         progress: 0,
         variant: 'kraft',
-        imageUrl: '/images/structured-products/Fiche 2 Produits Structurés Corrélation & Dispersion.png'
+        imageUrl: '/images/structured-products/Fiche 2 Produits Structurés Corrélation & Dispersion.png',
+        section: 'CHAPITRE 1 : THÉORIE & BASES'
     },
+
+    // CHAPITRE 2 : PRODUITS EQUITY (Autocalls)
     {
-        id: 'sp-3',
-        title: 'Coupon Anatomy',
-        category: 'Structured Products',
-        slug: 'structured-products',
-        difficulty: 'Easy',
-        progress: 0,
-        variant: 'white',
-        imageUrl: '/images/structured-products/Fiche 3 Produits Structurés Anatomie du Coupon.png'
-    },
-    {
-        id: 'sp-4',
-        title: 'CMS Steepener',
-        category: 'Structured Products',
-        slug: 'structured-products',
-        difficulty: 'Hard',
-        progress: 0,
-        variant: 'white',
-        imageUrl: '/images/structured-products/Fiche 4 Produits Structurés CMS Steepener.png'
-    },
-    {
-        id: 'sp-5',
-        title: 'Range Accrual',
+        id: 'sp-1',
+        title: 'Phoenix Autocall',
         category: 'Structured Products',
         slug: 'structured-products',
         difficulty: 'Medium',
         progress: 0,
-        variant: 'kraft',
-        imageUrl: '/images/structured-products/Fiche 5 Produits Structurés Range Accrual.png'
-    },
-    {
-        id: 'sp-6',
-        title: 'Phoenix Bearish CMS',
-        category: 'Structured Products',
-        slug: 'structured-products',
-        difficulty: 'Hard',
-        progress: 0,
         variant: 'white',
-        imageUrl: '/images/structured-products/Fiche 6 Produits Structurés Phoenix Bearish CMS.png'
+        imageUrl: '/images/structured-products/Fiche 1 Produits Structurés décomposition phoenix autocall.png',
+        section: 'CHAPITRE 2 : PRODUITS EQUITY'
     },
     {
         id: 'sp-7',
@@ -350,8 +398,46 @@ export const REVISION_SHEETS: Sheet[] = [
         difficulty: 'Medium',
         progress: 0,
         variant: 'kraft',
-        imageUrl: '/images/structured-products/Fiche 7 Produits Structurés Phoenix vs Athena.png'
+        imageUrl: '/images/structured-products/Fiche 7 Produits Structurés Phoenix vs Athena.png',
+        section: 'CHAPITRE 2 : PRODUITS EQUITY'
     },
+
+    // CHAPITRE 3 : PRODUITS TAUX (Yield)
+    {
+        id: 'sp-4',
+        title: 'CMS Steepener',
+        category: 'Structured Products',
+        slug: 'structured-products',
+        difficulty: 'Hard',
+        progress: 0,
+        variant: 'white',
+        imageUrl: '/images/structured-products/Fiche 4 Produits Structurés CMS Steepener.png',
+        section: 'CHAPITRE 3 : PRODUITS TAUX'
+    },
+    {
+        id: 'sp-5',
+        title: 'Range Accrual',
+        category: 'Structured Products',
+        slug: 'structured-products',
+        difficulty: 'Medium',
+        progress: 0,
+        variant: 'kraft',
+        imageUrl: '/images/structured-products/Fiche 5 Produits Structurés Range Accrual.png',
+        section: 'CHAPITRE 3 : PRODUITS TAUX'
+    },
+    {
+        id: 'sp-6',
+        title: 'Phoenix Bearish CMS',
+        category: 'Structured Products',
+        slug: 'structured-products',
+        difficulty: 'Hard',
+        progress: 0,
+        variant: 'white',
+        imageUrl: '/images/structured-products/Fiche 6 Produits Structurés Phoenix Bearish CMS.png',
+        section: 'CHAPITRE 3 : PRODUITS TAUX'
+    },
+
+    // CHAPITRE 4 : PRODUITS HYBRIDES (Multi-Asset)
     {
         id: 'sp-8',
         title: 'Hybrid Range Accrual',
@@ -360,7 +446,8 @@ export const REVISION_SHEETS: Sheet[] = [
         difficulty: 'Hard',
         progress: 0,
         variant: 'white',
-        imageUrl: '/images/structured-products/Fiche 8 Produits Structurés Hybride Range Accrual.png'
+        imageUrl: '/images/structured-products/Fiche 8 Produits Structurés Hybride Range Accrual.png',
+        section: 'CHAPITRE 4 : PRODUITS HYBRIDES'
     },
 
     // --- MOCK DATA (Other Categories) ---
