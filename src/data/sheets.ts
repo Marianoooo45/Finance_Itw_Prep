@@ -247,6 +247,7 @@ export const REVISION_SHEETS: Sheet[] = [
         imageUrl: '/images/equity-derivatives/Fiche 10 Equity Parité Call Put.png',
         section: 'CHAPITRE 1 : PRICING & THÉORIE'
     },
+
     {
         id: 'eq-8',
         title: 'Option Price Breakdown',
@@ -399,6 +400,17 @@ export const REVISION_SHEETS: Sheet[] = [
         progress: 0,
         variant: 'kraft',
         imageUrl: '/images/structured-products/Fiche 7 Produits Structurés Phoenix vs Athena.png',
+        section: 'CHAPITRE 2 : PRODUITS EQUITY'
+    },
+    {
+        id: 'sp-9',
+        title: 'Produit de Participation',
+        category: 'Structured Products',
+        slug: 'structured-products',
+        difficulty: 'Medium',
+        progress: 0,
+        variant: 'white',
+        imageUrl: '/images/structured-products/Fiche 9 Produits Structurés décomposition produit de participation.png',
         section: 'CHAPITRE 2 : PRODUITS EQUITY'
     },
 

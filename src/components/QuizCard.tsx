@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
+import Link from 'next/link';
 import rough from 'roughjs';
 import {
     drawRoundedCard,
@@ -112,13 +113,13 @@ export const QuizCard: React.FC<QuizCardProps> = ({ className = '' }) => {
     }, []);
 
     return (
-        <div className={`sketch-card-wrapper transition-all duration-300 hover:translate-y-[-4px] ${className}`}>
+        <Link href="/quiz" className={`sketch-card-wrapper transition-all duration-300 hover:translate-y-[-4px] cursor-pointer block ${className}`}>
             <canvas ref={canvasRef} className="sketch-canvas" />
             <div className="card-content-overlay">
                 <h1 className="quiz-title-sketch">QUIZ MODE</h1>
                 <div className="start-btn-sketch-text">START</div>
             </div>
-        </div>
+        </Link>
     );
 };
 
