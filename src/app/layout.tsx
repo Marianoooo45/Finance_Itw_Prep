@@ -8,6 +8,7 @@ export const metadata: Metadata = {
 };
 
 import AudioPlayer from "@/components/AudioPlayer";
+import CustomCursor from "@/components/CustomCursor";
 
 export default function RootLayout({
   children,
@@ -22,6 +23,7 @@ export default function RootLayout({
       </head>
       <body className="antialiased relative">
         <AudioPlayer />
+        <CustomCursor />
         {children}
       </body>
     </html>
