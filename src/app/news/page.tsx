@@ -54,6 +54,11 @@ export default function NewsPage() {
         fetchNews();
     }, []);
 
+    // Scroll to top on page change
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [currentPage]);
+
     const formatDate = (dateString: string) => {
         try {
             const date = new Date(dateString);
@@ -199,27 +204,39 @@ export default function NewsPage() {
                                 </a>
                             ))}
 
-                            {/* PAGINATION CONTROLS */}
+                            {/* PAGINATION CONTROLS (Sketchy Style) */}
                             {totalPages > 1 && (
-                                <div className="flex items-center justify-center gap-4 mt-8 pt-8 border-t-2 border-[#e2d1a6]/10">
+                                <div className="flex items-center justify-center gap-6 mt-12 pt-8 border-t-2 border-dashed border-[#e2d1a6]/20">
                                     <button
                                         onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                                         disabled={currentPage === 1}
-                                        className="px-4 py-2 rounded-lg border-2 border-[#e2d1a6] text-[#e2d1a6] hover:bg-[#e2d1a6] hover:text-[#1a1918] disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-[#e2d1a6] transition-all font-sketch font-bold"
+                                        className="
+                                            group relative px-6 py-2
+                                            font-sketch font-bold text-lg
+                                            text-[#e2d1a6] disabled:opacity-40 disabled:cursor-not-allowed
+                                            transition-transform active:scale-95 hover:-rotate-2
+                                        "
                                     >
-                                        ← Précédent
+                                        <div className="absolute inset-0 border-2 border-[#e2d1a6] rounded-[255px_15px_225px_15px/15px_225px_15px_255px] group-hover:bg-[#e2d1a6]/10 transition-colors"></div>
+                                        <span>← Précédent</span>
                                     </button>
 
-                                    <span className="font-mono text-sm opacity-60">
-                                        Page <span className="text-[#e2d1a6] font-bold text-lg">{currentPage}</span> / {totalPages}
-                                    </span>
+                                    <div className="font-sketch text-xl px-4 py-2 bg-[#e2d1a6]/10 rounded-lg transform rotate-1 border border-[#e2d1a6]/30">
+                                        Page <span className="text-[#e2d1a6] font-bold text-2xl mx-1">{currentPage}</span> / {totalPages}
+                                    </div>
 
                                     <button
                                         onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                                         disabled={currentPage === totalPages}
-                                        className="px-4 py-2 rounded-lg border-2 border-[#e2d1a6] text-[#e2d1a6] hover:bg-[#e2d1a6] hover:text-[#1a1918] disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-[#e2d1a6] transition-all font-sketch font-bold"
+                                        className="
+                                            group relative px-6 py-2
+                                            font-sketch font-bold text-lg
+                                            text-[#e2d1a6] disabled:opacity-40 disabled:cursor-not-allowed
+                                            transition-transform active:scale-95 hover:rotate-2
+                                        "
                                     >
-                                        Suivant →
+                                        <div className="absolute inset-0 border-2 border-[#e2d1a6] rounded-[255px_15px_225px_15px/15px_225px_15px_255px] group-hover:bg-[#e2d1a6]/10 transition-colors"></div>
+                                        <span>Suivant →</span>
                                     </button>
                                 </div>
                             )}

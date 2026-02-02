@@ -26,6 +26,22 @@ async function fetchRssFeed(url: string) {
     }
 }
 
+function decodeHtmlEntities(text: string) {
+    if (!text) return '';
+    return text
+        .replace(/&quot;/g, '"')
+        .replace(/&apos;/g, "'")
+        .replace(/&#039;/g, "'")
+        .replace(/&amp;/g, '&')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&#8217;/g, '’')
+        .replace(/&#8220;/g, '“')
+        .replace(/&#8221;/g, '”')
+        .replace(/&#8211;/g, '–')
+        .replace(/&nbsp;/g, ' ');
+}
+
 function parseXmlItems(xml: string) {
     const items: any[] = [];
     // Regex for basic RSS <item> parsing (Simple & Robust enough for standard feeds)
@@ -42,11 +58,12 @@ function parseXmlItems(xml: string) {
         const guid = itemContent.match(/<guid isPermaLink=".*?">(.*?)<\/guid>/) || itemContent.match(/<guid>(.*?)<\/guid>/);
 
         if (title && link) {
+            const rawDesc = description ? description[1].trim().replace(/<[^>]+>/g, '') : '';
             items.push({
-                title: title[1].trim(),
+                title: decodeHtmlEntities(title[1].trim()),
                 link: link[1].trim(),
                 pubDate: pubDate ? pubDate[1].trim() : '',
-                description: description ? description[1].trim().replace(/<[^>]+>/g, '') : '', // Strip HTML from desc
+                description: decodeHtmlEntities(rawDesc), // Strip HTML from desc then decode
                 guid: guid ? guid[1].trim() : (link[1].trim())
             });
         }
