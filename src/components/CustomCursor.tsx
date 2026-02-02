@@ -74,23 +74,22 @@ export default function CustomCursor() {
                 bowing: 0,
             };
 
-            // Hover Pointer - Same arrow shape as base cursor
-            // Visual difference handled via CSS transforms (slight rotation on hover)
+            // Hover Cursor - Crosshair/Target
+            // Dark fill with gold outline for visibility
 
-            const startX = 10;
-            const startY = 10;
-            const arrowPath = `
-              M ${startX} ${startY} 
-              L ${startX} ${startY + 26} 
-              L ${startX + 7} ${startY + 20} 
-              L ${startX + 14} ${startY + 34} 
-              L ${startX + 18} ${startY + 32} 
-              L ${startX + 11} ${startY + 18} 
-              L ${startX + 20} ${startY + 18} 
-              Z
-            `;
-
-            svg.appendChild(rc.path(arrowPath, mainStyle));
+            // Crosshair centered at (25, 25)
+            // Horizontal bar: x=10, y=22.5, w=30, h=5 → center at 25,25
+            svg.appendChild(rc.rectangle(10, 22.5, 30, 5, mainStyle));
+            // Vertical bar: x=22.5, y=10, w=5, h=30 → center at 25,25
+            svg.appendChild(rc.rectangle(22.5, 10, 5, 30, mainStyle));
+            // Center dot (gold) - exactly at 25,25
+            svg.appendChild(rc.circle(25, 25, 5, {
+                stroke: '#2a2a2a',
+                strokeWidth: 2,
+                fill: '#e2d1a6',
+                fillStyle: 'solid',
+                roughness: 0
+            }));
         }
 
         // --- 3. Event Listeners ---
@@ -159,16 +158,16 @@ export default function CustomCursor() {
                     style={{ marginLeft: "-10px", marginTop: "-10px" }}
                 />
 
-                {/* HOVER STATE (Arrow with slight rotation) */}
+                {/* HOVER STATE (Crosshair) */}
                 <div
                     ref={hoverContainerRef}
                     className={`
             absolute top-0 left-0
-            transition-all duration-150 ease-out origin-[10px_10px]
-            ${isHovering ? "opacity-100 scale-100 rotate-[-8deg]" : "opacity-0 scale-75"}
-            ${isMouseDown && isHovering ? "scale-90" : ""}
+            transition-all duration-150 ease-out origin-center
+            ${isHovering ? "opacity-100 scale-100" : "opacity-0 scale-50"}
+            ${isMouseDown && isHovering ? "scale-75" : ""}
           `}
-                    style={{ marginLeft: "-10px", marginTop: "-10px" }}
+                    style={{ marginLeft: "-25px", marginTop: "-25px" }}
                 />
             </div>
         </>
