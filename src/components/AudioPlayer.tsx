@@ -18,6 +18,11 @@ const PLAYLISTS = {
         { title: "La Chanson de la Joie", artist: "McFly & Carlito", src: "/music/troll/LA CHANSON DE LA JOIE (DEFI YOUTUBE WARRIOR 2 PERDU RE-UPLOAD) [E4691igUPG8].mp3" },
         { title: "Quotidien", artist: "Mastu", src: "/music/troll/Mastu - Quotidien (gage en slip) [bxskLwoNJ_k].mp3" },
         { title: "FIER", artist: "Michou", src: "/music/troll/Michou - FIER (Clip Officiel) [IFcxEfRO3n4].mp3" },
+        { title: "BURGERS", artist: "Les Jones", src: "/music/troll/LES JONES - BURGERS.mp3" },
+        { title: "J'VAIS VOUS PECHO", artist: "Parodie", src: "/music/troll/LUIS FONSI - JVAIS VOUS PECHO (PARODIE).mp3" },
+        { title: "LAPT", artist: "Mister V", src: "/music/troll/MISTER V - LAPT.mp3" },
+        { title: "Time Time", artist: "Trei Degete", src: "/music/troll/Trei Degete - Time Time.mp3" },
+        { title: "UNE ARAIGNÉE !", artist: "Bledard Story", src: "/music/troll/UNE ARAIGNÉE ! BLEDARD STORY.mp3" },
     ],
     focus: [
         { title: "Aria Math (Slowed)", artist: "C418", src: "/music/chill/C418 - Aria Math (Slowed %2B Rain).mp3" },
