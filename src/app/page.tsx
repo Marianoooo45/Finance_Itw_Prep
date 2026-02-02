@@ -143,7 +143,7 @@ export default function Home() {
           </div>
 
           {/* SECTION STATS - Ligne 2 (Alignement sous les cartes du haut) */}
-          <div className="flex flex-col md:flex-row gap-4 md:gap-6">
+          <div className="flex flex-col md:flex-row gap-4 md:gap-6 mb-6">
             {/* Daily Streak */}
             <div className="w-full md:w-[40%]">
               <DailyStreakCard streak={streak} />
@@ -153,6 +153,42 @@ export default function Home() {
             <div className="w-full md:w-[60%]">
               <ProgressCard progress={progress / 100} />
             </div>
+          </div>
+
+          {/* MARKET NEWS - Ligne 3 */}
+          <div className="w-full mb-8">
+            <Link href="/news" className="block group relative transform transition-all hover:scale-[1.01] active:scale-[0.99]" onMouseDown={playPaper}>
+              <div className="
+                    absolute inset-0 bg-[#e2d1a6] 
+                    rounded-[255px_15px_225px_15px/15px_225px_15px_255px]
+                    rotate-[0.5deg] group-hover:rotate-[0deg] transition-all
+                "></div>
+              <div className="
+                    relative bg-[#1a1918] border-2 border-[#e2d1a6]
+                    rounded-[255px_15px_225px_15px/15px_225px_15px_255px]
+                    p-6 flex items-center justify-between
+                    hover:bg-[#252423] transition-colors
+                ">
+                <div className="flex flex-col">
+                  <h2 className="text-2xl font-chalk font-bold text-[#e2d1a6] mb-1 group-hover:text-white transition-colors">
+                    LIVE MARKET NEWS
+                  </h2>
+                  <p className="text-sm font-hand text-[#e2d1a6]/70">
+                    Actus financières en temps réel (Investir / Les Echos)
+                  </p>
+                </div>
+
+                {/* Newspaper Icon */}
+                <div className="w-12 h-12 rounded-full border-2 border-[#e2d1a6] flex items-center justify-center group-hover:bg-[#e2d1a6] transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#e2d1a6] group-hover:text-[#1a1918]">
+                    <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2" />
+                    <path d="M18 14h-8" />
+                    <path d="M15 18h-5" />
+                    <path d="M10 6h8v4h-8V6Z" />
+                  </svg>
+                </div>
+              </div>
+            </Link>
           </div>
         </div>
       </div>
