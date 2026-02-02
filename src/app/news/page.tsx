@@ -27,6 +27,8 @@ export default function NewsPage() {
     const [newsData, setNewsData] = useState<NewsData | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const ITEMS_PER_PAGE = 10;
 
     const fetchNews = async () => {
         setLoading(true);
@@ -39,6 +41,7 @@ export default function NewsPage() {
             const data = await response.json();
             if (data.error) throw new Error(data.error);
             setNewsData(data);
+            setCurrentPage(1); // Reset to page 1 on refresh
         } catch (err) {
             console.error(err);
             setError("Impossible de récupérer les actus. Le stagiaire a renversé du café sur le serveur.");
@@ -65,9 +68,16 @@ export default function NewsPage() {
         }
     };
 
+    // Pagination Logic
+    const totalItems = newsData?.items.length || 0;
+    const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+    const currentItems = newsData?.items.slice(
+        (currentPage - 1) * ITEMS_PER_PAGE,
+        currentPage * ITEMS_PER_PAGE
+    ) || [];
+
     return (
         <main className="min-h-screen relative bg-[#1a1918] text-[#e2d1a6] p-6 md:p-10 font-hand">
-            {/* NOISE & BACKGROUND */}
             {/* NOISE & BACKGROUND */}
             <div className="fixed inset-0 pointer-events-none"
                 style={{
@@ -95,7 +105,7 @@ export default function NewsPage() {
                             <WobblyDecoration className="w-full text-[#e2d1a6] opacity-60" />
                             {newsData && (
                                 <p className="text-sm text-[#e2d1a6]/60 font-mono mt-2">
-                                    Source: {newsData.source} (Live)
+                                    Source: {newsData.source} (Live) • {totalItems} articles
                                 </p>
                             )}
                         </div>
@@ -119,7 +129,7 @@ export default function NewsPage() {
                 </header>
 
                 {/* NEWS LIST */}
-                <div className="grid gap-6">
+                <div className="grid gap-6 min-h-[600px]">
                     {loading ? (
                         // SKELETONS
                         Array.from({ length: 5 }).map((_, i) => (
@@ -141,52 +151,79 @@ export default function NewsPage() {
                         </div>
                     ) : (
                         // NEWS ITEMS
-                        newsData?.items.map((item, idx) => (
-                            <a
-                                key={item.guid || idx}
-                                href={item.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="group block relative"
-                            >
-                                <div className={`
-                                    relative bg-[#1a1918] border-2 border-[#e2d1a6]/30 p-6 rounded-lg
-                                    hover:border-[#e2d1a6] hover:bg-[#e2d1a6]/5 transition-all duration-300
-                                    ${idx % 2 === 0 ? 'rotate-[0.5deg]' : 'rotate-[-0.5deg]'}
-                                    hover:rotate-0 hover:scale-[1.01] hover:shadow-[0px_0px_30px_rgba(226,209,166,0.1)]
-                                `}>
-                                    {/* PIN DECORATION */}
-                                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-red-400 border-2 border-[#1a1918] shadow-sm z-20"></div>
+                        <>
+                            {currentItems.map((item, idx) => (
+                                <a
+                                    key={item.guid || idx}
+                                    href={item.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="group block relative"
+                                >
+                                    <div className={`
+                                        relative bg-[#1a1918] border-2 border-[#e2d1a6]/30 p-6 rounded-lg
+                                        hover:border-[#e2d1a6] hover:bg-[#e2d1a6]/5 transition-all duration-300
+                                        ${idx % 2 === 0 ? 'rotate-[0.5deg]' : 'rotate-[-0.5deg]'}
+                                        hover:rotate-0 hover:scale-[1.01] hover:shadow-[0px_0px_30px_rgba(226,209,166,0.1)]
+                                    `}>
+                                        {/* PIN DECORATION */}
+                                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-red-400 border-2 border-[#1a1918] shadow-sm z-20"></div>
 
-                                    <div className="flex flex-col md:flex-row gap-4 justify-between items-start">
-                                        <div className="flex-1">
-                                            <div className="flex items-center gap-2 mb-2">
-                                                <span className="bg-[#e2d1a6] text-[#1a1918] text-[10px] uppercase font-bold px-2 py-0.5 rounded-sm">
-                                                    News
-                                                </span>
-                                                <span className="text-xs font-mono opacity-50">
-                                                    {formatDate(item.pubDate)}
-                                                </span>
+                                        <div className="flex flex-col md:flex-row gap-4 justify-between items-start">
+                                            <div className="flex-1">
+                                                <div className="flex items-center gap-2 mb-2">
+                                                    <span className="bg-[#e2d1a6] text-[#1a1918] text-[10px] uppercase font-bold px-2 py-0.5 rounded-sm">
+                                                        News
+                                                    </span>
+                                                    <span className="text-xs font-mono opacity-50">
+                                                        {formatDate(item.pubDate)}
+                                                    </span>
+                                                </div>
+
+                                                <h2 className="text-xl md:text-2xl font-chalk font-bold text-[#e2d1a6] mb-3 group-hover:text-white transition-colors leading-tight">
+                                                    {item.title}
+                                                </h2>
+
+                                                {item.description && item.description.trim() !== '' && item.description !== 'null' && item.description.length < 300 && (
+                                                    <p className="text-sm md:text-base opacity-70 line-clamp-3 leading-relaxed">
+                                                        {item.description}
+                                                    </p>
+                                                )}
                                             </div>
 
-                                            <h2 className="text-xl md:text-2xl font-chalk font-bold text-[#e2d1a6] mb-3 group-hover:text-white transition-colors leading-tight">
-                                                {item.title}
-                                            </h2>
-
-                                            {item.description && item.description.trim() !== '' && item.description !== 'null' && item.description.length < 300 && (
-                                                <p className="text-sm md:text-base opacity-70 line-clamp-3 leading-relaxed">
-                                                    {item.description}
-                                                </p>
-                                            )}
-                                        </div>
-
-                                        <div className="md:self-center opacity-0 group-hover:opacity-100 transition-opacity -translate-x-4 group-hover:translate-x-0 duration-300">
-                                            <ExternalLink className="w-6 h-6 text-[#e2d1a6]" />
+                                            <div className="md:self-center opacity-0 group-hover:opacity-100 transition-opacity -translate-x-4 group-hover:translate-x-0 duration-300">
+                                                <ExternalLink className="w-6 h-6 text-[#e2d1a6]" />
+                                            </div>
                                         </div>
                                     </div>
+                                </a>
+                            ))}
+
+                            {/* PAGINATION CONTROLS */}
+                            {totalPages > 1 && (
+                                <div className="flex items-center justify-center gap-4 mt-8 pt-8 border-t-2 border-[#e2d1a6]/10">
+                                    <button
+                                        onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                                        disabled={currentPage === 1}
+                                        className="px-4 py-2 rounded-lg border-2 border-[#e2d1a6] text-[#e2d1a6] hover:bg-[#e2d1a6] hover:text-[#1a1918] disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-[#e2d1a6] transition-all font-sketch font-bold"
+                                    >
+                                        ← Précédent
+                                    </button>
+
+                                    <span className="font-mono text-sm opacity-60">
+                                        Page <span className="text-[#e2d1a6] font-bold text-lg">{currentPage}</span> / {totalPages}
+                                    </span>
+
+                                    <button
+                                        onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                                        disabled={currentPage === totalPages}
+                                        className="px-4 py-2 rounded-lg border-2 border-[#e2d1a6] text-[#e2d1a6] hover:bg-[#e2d1a6] hover:text-[#1a1918] disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-[#e2d1a6] transition-all font-sketch font-bold"
+                                    >
+                                        Suivant →
+                                    </button>
                                 </div>
-                            </a>
-                        ))
+                            )}
+                        </>
                     )}
                 </div>
 

@@ -174,7 +174,7 @@ export default function Home() {
                     LIVE MARKET NEWS
                   </h2>
                   <p className="text-sm font-hand text-[#e2d1a6]/70">
-                    Actus financières en temps réel (Investir / Les Echos)
+                    Actus financières en temps réel (Yahoo Finance)
                   </p>
                 </div>
 

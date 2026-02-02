@@ -55,15 +55,17 @@ function parseXmlItems(xml: string) {
 }
 
 export async function GET() {
-    // Using the specific feed provided by the user
+    // Aggregating multiple Yahoo Finance FR feeds to get more volume (> 5 items)
     const FEEDS = [
-        { url: 'https://services.lesechos.fr/rss/investir-marches-indices.xml', weight: 2 },
+        { url: 'https://fr.finance.yahoo.com/news/rss', weight: 1 },       // Top News
+        { url: 'https://fr.finance.yahoo.com/rss/actualites', weight: 1 }, // General News
+        { url: 'https://fr.finance.yahoo.com/rss/economie', weight: 1 },   // Economy
     ];
 
-    // Fallback: Yahoo Finance France
-    const YAHOO_RSS = 'https://fr.finance.yahoo.com/news/rss';
+    // Fallback URL (if others fail completely)
+    const FALLBACK_RSS = 'https://fr.finance.yahoo.com/rss/start';
 
-    console.log("Fetching News (Targeting Investir)...");
+    console.log("Fetching News (Yahoo Finance FR)...");
 
     try {
         const feedPromises = FEEDS.map(f => fetchRssFeed(f.url));
@@ -84,11 +86,11 @@ export async function GET() {
 
         // Fallback global
         if (successCount === 0) {
-            console.warn("Investir/Les Echos feeds blocked/failed, switching to Yahoo Finance FR.");
-            const xml = await fetchRssFeed(YAHOO_RSS);
+            console.warn("Main Yahoo feed failed, trying fallback URL.");
+            const xml = await fetchRssFeed(FALLBACK_RSS);
             if (xml) {
                 allItems = parseXmlItems(xml);
-                return NextResponse.json({ source: 'Yahoo Finance FR (Fallback)', items: allItems.slice(0, 20) });
+                return NextResponse.json({ source: 'Yahoo Finance FR', items: allItems.slice(0, 20) });
             }
             return NextResponse.json({ error: "Failed to fetch news from all sources" }, { status: 500 });
         }
@@ -102,7 +104,7 @@ export async function GET() {
         });
 
         return NextResponse.json({
-            source: 'Investir', // On affiche "Investir" pour faire plaisir à l'user (même si c'est mixé Echos)
+            source: 'Yahoo Finance FR',
             items: uniqueItems.slice(0, 30)
         });
 
