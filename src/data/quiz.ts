@@ -568,6 +568,114 @@ export const QUIZ_QUESTIONS: Question[] = [
                 text: 'Risque gérable pour le desk (Gamma fini) et prix correct pour structurer un bon coupon.'
             }
         }
+    },
+
+    // Question 27: MCQ - Indépendance Banque Centrale
+    {
+        id: 'q27',
+        type: 'mcq',
+        category: 'Macro & Rates',
+        difficulty: 'Medium',
+        title: 'Indépendance de la Banque Centrale',
+        question: 'Pourquoi une banque centrale doit-elle être indépendante ?',
+        options: [
+            'Pour éviter que le gouvernement n\'imprime de la monnaie pour financer ses déficits (monétisation de la dette)',
+            'Pour pouvoir augmenter les impôts sans l\'accord du parlement',
+            'Pour réaliser un profit maximum sur ses réserves de change',
+            'Pour être cotée en bourse'
+        ],
+        correctIndex: 0,
+        explanation: 'L\'indépendance permet d\'éviter les cycles politiques et la monétisation de la dette publique, garantissant ainsi son objectif principal : la stabilité des prix.'
+    },
+
+    // Question 28: MCQ - Produit Long Brent
+    {
+        id: 'q28',
+        type: 'mcq',
+        category: 'Commodities',
+        difficulty: 'Medium',
+        title: 'Exposition au Brent',
+        question: 'Pour être "Long" sur le Brent (pétrole), quel produit pouvez-vous acheter ?',
+        options: [
+            'Un contrat Future ou un Call sur le Brent',
+            'Un Put sur le Brent',
+            'Une obligation d\'Etat',
+            'Vendre à découvert des actions d\'entreprises énergétiques'
+        ],
+        correctIndex: 0,
+        explanation: 'Pour être long (parier sur la hausse), on peut acheter des contrats Futures sur le Brent ou des options d\'achat (Call).'
+    },
+
+    // Question 29: MCQ - Politique Monétaire Expansionniste
+    {
+        id: 'q29',
+        type: 'mcq',
+        category: 'Macro & Rates',
+        difficulty: 'Easy',
+        title: 'Politique Monétaire Expansionniste',
+        question: 'Qu\'est-ce qu\'une politique monétaire expansionniste ?',
+        options: [
+            'Une politique visant à augmenter les taux d\'intérêt et réduire la masse monétaire',
+            'Une politique visant à baisser les taux directeurs et injecter de la liquidité pour stimuler l\'économie',
+            'Une réduction drastique des dépenses publiques',
+            'Une politique purement fiscale d\'augmentation des impôts'
+        ],
+        correctIndex: 1,
+        explanation: 'Une politique expansionniste (ex: baisse des taux, quantitative easing) vise à relancer la croissance économique en facilitant le crédit bancaire.'
+    },
+
+    // Question 30: MCQ - Le Funding
+    {
+        id: 'q30',
+        type: 'mcq',
+        category: 'Trading Desk',
+        difficulty: 'Medium',
+        title: 'Le Funding (Financement)',
+        question: 'Dans une salle de marché, qu\'est-ce que le "funding" ?',
+        options: [
+            'Le coût d\'acquisition marketing des clients',
+            'Le coût d\'emprunt ou de placement de liquidités pour financer les positions du desk',
+            'Les primes versées aux dirigeants',
+            'Les frais de courtage'
+        ],
+        correctIndex: 1,
+        explanation: 'Le funding est le coût de financement. Un desk doit emprunter ou prêter du cash pour maintenir ses positions, et ce taux d\'intérêt impacte directement son P&L global.'
+    },
+
+    // Question 31: MCQ - L'inflation
+    {
+        id: 'q31',
+        type: 'mcq',
+        category: 'Macro & Rates',
+        difficulty: 'Easy',
+        title: 'L\'Inflation : Bien ou Mal ?',
+        question: 'L\'inflation est-elle bénéfique ou néfaste pour l\'économie ?',
+        options: [
+            'Toujours bénéfique, car elle fait monter la valeur nominale des actifs',
+            'Toujours néfaste car elle détruit le pouvoir d\'achat de l\'épargne quoiqu\'il arrive',
+            'Une inflation modérée (autour de 2%) est considérée comme saine, mais des extrêmes (hyper-inflation ou déflation) sont néfastes',
+            'L\'inflation n\'a aucun impact réel car les salaires s\'ajustent instantanément'
+        ],
+        correctIndex: 2,
+        explanation: 'Les banques centrales visent généralement une inflation modérée (environ 2%) pour encourager la consommation et l\'investissement, évitant ainsi un dangereux cycle de déflation.'
+    },
+
+    // Question 32: MCQ - Varswap
+    {
+        id: 'q32',
+        type: 'mcq',
+        category: 'Equity Derivatives',
+        difficulty: 'Hard',
+        title: 'Intérêt du Variance Swap (Varswap)',
+        question: 'Quel est le principal intérêt de traiter un Variance Swap (Varswap) ?',
+        options: [
+            'S\'exposer purement à la volatilité réalisée sans le risque directionnel lié au spot et sans besoin de couverture dynamique continue (delta-hedging)',
+            'Se couvrir directement contre le risque de crédit d\'un client',
+            'Parier de manière pure directionnelle sur la hausse d\'une action sans verser la prime',
+            'Recevoir un taux d\'intérêt fixe'
+        ],
+        correctIndex: 0,
+        explanation: 'Le Varswap offre une exposition pure à la variance d\'un sous-jacent. Il permet d\'éviter la gestion fastidieuse du delta hedging requise par un portefeuille d\'options classique.'
     }
 ];
 
